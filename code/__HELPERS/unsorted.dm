@@ -759,7 +759,7 @@ GLOBAL_LIST_INIT(wallitems, typecacheof(list(
 	/obj/machinery/status_display, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
 	/obj/machinery/computer/security/telescreen,
-	/obj/item/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
+	/obj/item/storage/secure/safe, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/closet/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
 	)))
 
@@ -970,6 +970,54 @@ GLOBAL_LIST_INIT(wallitems, typecacheof(list(
 		if(location == src)
 			return TRUE
 
+GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
+
+/// Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(range = world.view, center, invis_flags = 0)
+	if(!center)
+		return
+
+	GLOB.dview_mob.loc = center
+
+	GLOB.dview_mob.see_invisible = invis_flags
+
+	. = view(range, GLOB.dview_mob)
+	GLOB.dview_mob.loc = null
+
+/mob/dview
+	name = "INTERNAL DVIEW MOB"
+	invisibility = 101
+	density = FALSE
+	see_in_dark = 1e6
+	move_resist = INFINITY
+	var/ready_to_die = FALSE
+
+/mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
+	SHOULD_CALL_PARENT(FALSE)
+	if(flags_atom & INITIALIZED)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	flags_atom |= INITIALIZED
+	return INITIALIZE_HINT_NORMAL
+
+/mob/dview/Destroy(force = FALSE)
+	if(!ready_to_die)
+		stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
+
+		if (!force)
+			return QDEL_HINT_LETMELIVE
+
+		log_world("EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS")
+		GLOB.dview_mob = new
+	return ..()
+
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	GLOB.dview_mob.loc = center;           \
+	GLOB.dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, GLOB.dview_mob))
+
+#define FOR_DVIEW_END GLOB.dview_mob.loc = null
+
 /*
 
 Gets the turf this atom's *ICON* appears to inhabit
@@ -1048,7 +1096,7 @@ will handle it, but:
 	var/list/mobs = sortmobs()
 	var/list/namecounts = list()
 	var/list/pois = list()
-	for(var/mob/M in mobs)
+	for(var/mob/M AS in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
 			continue
 		if(M.client?.holder)
@@ -1153,3 +1201,5 @@ will handle it, but:
 				turfs_to_check += T
 			turfs_to_check -= trf
 	return	cone_turfs
+
+GLOBAL_LIST_INIT(survivor_outfits, typecacheof(/datum/outfit/job/survivor))

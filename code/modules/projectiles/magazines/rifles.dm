@@ -67,17 +67,6 @@
 	gun_type = /obj/item/weapon/gun/rifle/standard_assaultrifle
 	icon_state_mini = "mag_rifle_big"
 
-/obj/item/ammo_magazine/box10x24mm
-	name = "box of 10x24mm"
-	desc = "A box containing 150 rounds of 10x24mm caseless.."
-	caliber = CALIBER_10X24_CASELESS
-	icon_state = "box_10x24mm"
-	w_class = WEIGHT_CLASS_NORMAL
-	default_ammo = /datum/ammo/bullet/rifle
-	current_rounds = 150
-	max_rounds = 150
-	icon_state_mini = "ammo_packet"
-
 //-------------------------------------------------------
 //T37 DMR
 
@@ -93,7 +82,7 @@
 	icon_state_mini = "mag_dmr"
 
 /obj/item/ammo_magazine/rifle/standard_dmr/incendiary
-	name = "\improper T-64 incendiary magazine (10x27mm)"
+	name = "\improper T-37 incendiary magazine (10x27mm)"
 	desc = "A 10mm incendiary DMR magazine, carries less rounds however."
 	caliber = CALIBER_10X27_INCENDIARY_CASELESS
 	icon_state = "t37_incin"
@@ -128,17 +117,6 @@
 	gun_type = /obj/item/weapon/gun/rifle/standard_br
 	icon_state_mini = "mag_rifle_big_red"
 
-/obj/item/ammo_magazine/box10x27mm
-	name = "box of 10x27mm"
-	desc = "A box containing 100 rounds of 10x27mm caseless.."
-	caliber = CALIBER_10x27_CASELESS
-	icon_state = "box_10x27mm"
-	w_class = WEIGHT_CLASS_NORMAL
-	default_ammo = /datum/ammo/bullet/rifle/standard_dmr
-	current_rounds = 100
-	max_rounds = 100
-	icon_state_mini = "ammo_packet"
-
 //-------------------------------------------------------
 //M41A TRUE AND ORIGINAL
 
@@ -148,7 +126,7 @@
 	icon_state = "m41a"
 	max_rounds = 95
 	gun_type = /obj/item/weapon/gun/rifle/m41a
-
+	icon_state_mini = "mag_rifle_big"
 
 
 //-------------------------------------------------------
@@ -162,13 +140,14 @@
 	default_ammo = /datum/ammo/bullet/rifle/ak47
 	max_rounds = 40
 	gun_type = /obj/item/weapon/gun/rifle/ak47
+	icon_state_mini = "mag_rifle_big"
 
 /obj/item/ammo_magazine/rifle/ak47/extended
 	name = "\improper AK extended magazine (7.62x39mm)"
 	desc = "A 7.62x39mm Kalashnikov magazine, this one carries more rounds than the average magazine."
-	max_rounds = 60
+	icon_state = "ak47_ext"
 	bonus_overlay = "ak47_ex"
-	icon_state_mini = "mag_rifle_big_yellow"
+	max_rounds = 60
 
 
 
@@ -183,6 +162,7 @@
 	default_ammo = /datum/ammo/bullet/rifle
 	max_rounds = 30 //Also comes in 30 and 100 round Beta-C mag.
 	gun_type = /obj/item/weapon/gun/rifle/m16
+	icon_state_mini = "mag_rifle_big"
 
 //-------------------------------------------------------
 //FAMAS RIFLE
@@ -225,17 +205,6 @@
 	reload_delay = 3 SECONDS
 	icon_state_mini = "mag_gpmg"
 
-/obj/item/ammo_magazine/box10x26mm
-	name = "packet of 10x26mm"
-	desc = "A packet containing 100 rounds of 10x26mm caseless.."
-	icon_state = "box_10x26mm"
-	caliber = CALIBER_10x26_CASELESS
-	default_ammo = /datum/ammo/bullet/rifle/machinegun
-	w_class = WEIGHT_CLASS_SMALL
-	current_rounds = 100
-	max_rounds = 100
-	icon_state_mini = "ammo_packet"
-
 //-------------------------------------------------------
 //M412L1 HEAVY PULSE RIFLE
 
@@ -261,6 +230,7 @@
 	default_ammo = /datum/ammo/bullet/rifle/ak47
 	max_rounds = 42
 	gun_type = /obj/item/weapon/gun/rifle/type71
+	icon_state_mini = "mag_rifle_big"
 
 //TX-16 AUTOMATIC SHOTGUN
 
@@ -299,6 +269,21 @@
 	reload_delay = 2.5 SECONDS
 	icon_state_mini = "mag_t29"
 
+//-------------------------------------------------------
+//T-25 SMARTRIFLE
+
+/obj/item/ammo_magazine/rifle/standard_smartrifle
+	name = "\improper T-25 magazine (10x26mm)"
+	desc = "A 10mm assault rifle magazine."
+	caliber = CALIBER_10x26_CASELESS
+	icon_state = "t25"
+	w_class = WEIGHT_CLASS_NORMAL
+	default_ammo = /datum/ammo/bullet/smartgun/smartrifle
+	max_rounds = 80
+	gun_type = /obj/item/weapon/gun/rifle/standard_smartrifle
+	icon_state_mini = "mag_rifle_big"
+
+
 
 //-------------------------------------------------------
 //Sectoid Rifle
@@ -311,6 +296,7 @@
 	default_ammo = /datum/ammo/energy/plasma
 	max_rounds = 20
 	gun_type = /obj/item/weapon/gun/rifle/sectoid_rifle
+	icon_state_mini = "mag_rifle_purple"
 
 //-------------------------------------------------------
 //Marine magazine sniper, or the TL-127.
@@ -328,11 +314,11 @@
 //Marine magazine automatic sniper, or the T-81.
 /obj/item/ammo_magazine/rifle/autosniper
 	name = "\improper T-81 automatic sniper rifle magazine"
-	desc = "A box magazine filled with 8.6x70mm rifle rounds for the T-81."
+	desc = "A box magazine filled with low pressure 8.6x70mm rifle rounds for the T-81."
 	caliber = CALIBER_86X70
 	icon_state = "t81"
 	default_ammo = /datum/ammo/bullet/sniper/auto
-	max_rounds = 12
+	max_rounds = 20
 	gun_type = /obj/item/weapon/gun/rifle/standard_autosniper
 	icon_state_mini = "mag_sniper"
 
@@ -347,3 +333,42 @@
 	max_rounds = 70
 	gun_type = /obj/item/weapon/gun/rifle/tx11
 	icon_state_mini = "mag_tx11"
+
+//-------------------------------------------------------
+//T-21
+/obj/item/ammo_magazine/rifle/standard_skirmishrifle
+	name = "\improper T-21 skirmish rifle magazine"
+	desc = "A magazine filled with 10x25mm rifle rounds for the T-21."
+	caliber = CALIBER_10X25_CASELESS
+	icon_state = "t21"
+	default_ammo = /datum/ammo/bullet/rifle/heavy
+	max_rounds = 30
+	gun_type = /obj/item/weapon/gun/rifle/standard_skirmishrifle
+	icon_state_mini = "mag_rifle"
+
+//ALF-51B
+
+/obj/item/ammo_magazine/rifle/alf_machinecarbine
+	name = "\improper ALF-51B box magazine (10x25mm)"
+	desc = "A box magazine for the ALF-51B machinecarbine."
+	icon_state = "t60"
+	caliber = CALIBER_10X25_CASELESS
+	default_ammo = /datum/ammo/bullet/rifle/heavy
+	w_class = WEIGHT_CLASS_NORMAL
+	max_rounds = 80
+	reload_delay = 1 SECONDS
+	gun_type = /obj/item/weapon/gun/rifle/alf_machinecarbine
+	icon_state_mini = "mag_t42"
+
+//-------------------------------------------------------
+//MKH98
+
+/obj/item/ammo_magazine/rifle/mkh
+	name = "\improper MKH-98 storm rifle magazine"
+	desc = "A magazine filled with 7.62X39 rifle rounds for the MKH."
+	caliber = CALIBER_762X39
+	icon_state = "mkh98"
+	default_ammo = /datum/ammo/bullet/rifle/heavy
+	max_rounds = 26
+	gun_type = /obj/item/weapon/gun/rifle/mkh
+	icon_state_mini = "mag_rifle"

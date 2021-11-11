@@ -11,9 +11,6 @@
 	// *** Melee Attacks *** //
 	melee_damage = 20
 
-	// *** Tackle *** //
-	tackle_damage = 25
-
 	// *** Speed *** //
 	speed = -0.2
 
@@ -30,7 +27,7 @@
 	deevolves_to = /mob/living/carbon/xenomorph/spitter
 
 	// *** Flags *** //
-	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER
+	caste_flags = CASTE_CAN_BE_QUEEN_HEALED|CASTE_CAN_BE_GIVEN_PLASMA|CASTE_CAN_BE_LEADER|CAN_BECOME_KING
 
 	// *** Defense *** //
 	soft_armor = list("melee" = 30, "bullet" = 35, "laser" = 35, "energy" = 35, "bomb" = XENO_BOMB_RESIST_0, "bio" = 28, "rad" = 28, "fire" = 35, "acid" = 28)
@@ -53,8 +50,6 @@
 	actions = list(
 		/datum/action/xeno_action/xeno_resting,
 		/datum/action/xeno_action/activable/psydrain,
-		/datum/action/xeno_action/activable/headbite,
-		/datum/action/xeno_action/activable/devour,
 		/datum/action/xeno_action/place_acidwell,
 		/datum/action/xeno_action/activable/corrosive_acid,
 		/datum/action/xeno_action/activable/xeno_spit,
@@ -71,9 +66,6 @@
 	upgrade_name = "Mature"
 	caste_desc = "A giant ranged monster. It looks a little more dangerous."
 	upgrade = XENO_UPGRADE_ONE
-
-	// *** Tackle *** //
-	tackle_damage = 25
 
 	// *** Speed *** //
 	speed = -0.3
@@ -108,9 +100,6 @@
 
 	// *** Melee Attacks *** //
 	melee_damage = 23
-
-	// *** Tackle *** //
-	tackle_damage = 28
 
 	// *** Speed *** //
 	speed = -0.4
@@ -147,9 +136,6 @@
 	// *** Melee Attacks *** //
 	melee_damage = 23
 
-	// *** Tackle *** //
-	tackle_damage = 28
-
 	// *** Speed *** //
 	speed = -0.5
 
@@ -164,7 +150,7 @@
 	upgrade_threshold = 2750
 
 	// *** Defense *** //
-	soft_armor = list("melee" = 45, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = XENO_BOMB_RESIST_0, "bio" = 38, "rad" = 38, "fire" = 50, "acid" = 38)
+	soft_armor = list("melee" = 45, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = XENO_BOMB_RESIST_1, "bio" = 38, "rad" = 38, "fire" = 50, "acid" = 38)
 
 	// *** Ranged Attack *** //
 	spit_delay = 1 SECONDS

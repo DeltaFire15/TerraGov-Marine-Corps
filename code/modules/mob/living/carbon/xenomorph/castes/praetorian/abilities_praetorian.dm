@@ -6,7 +6,7 @@
 	action_icon_state = "spray_acid"
 	mechanics_text = "Spray a cone of dangerous acid at your target."
 	ability_name = "spray acid"
-	plasma_cost = 200
+	plasma_cost = 300
 	cooldown_timer = 40 SECONDS
 
 /datum/action/xeno_action/activable/spray_acid/cone/use_ability(atom/A)
@@ -28,10 +28,10 @@
 	succeed_activate()
 
 	playsound(X.loc, 'sound/effects/refill.ogg', 25, 1)
-	X.visible_message("<span class='xenowarning'>\The [X] spews forth a wide cone of acid!</span>", \
-	"<span class='xenowarning'>We spew forth a cone of acid!</span>", null, 5)
+	X.visible_message(span_xenowarning("\The [X] spews forth a wide cone of acid!"), \
+	span_xenowarning("We spew forth a cone of acid!"), null, 5)
 
-	X.add_movespeed_modifier(type, TRUE, 0, NONE, TRUE, 2)
+	X.add_movespeed_modifier(type, TRUE, 0, NONE, TRUE, 1)
 	start_acid_spray_cone(target, X.xeno_caste.acid_spray_range)
 	add_cooldown()
 	addtimer(CALLBACK(src, .proc/reset_speed), rand(2 SECONDS, 3 SECONDS))
@@ -45,15 +45,17 @@
 /datum/action/xeno_action/activable/spray_acid/ai_should_start_consider()
 	return TRUE
 
-/datum/action/xeno_action/activable/spray_acid/ai_should_use(target)
+/datum/action/xeno_action/activable/spray_acid/ai_should_use(atom/target)
 	if(owner.do_actions) //Chances are we're already spraying acid, don't override it
-		return
+		return FALSE
 	if(!iscarbon(target))
-		return ..()
+		return FALSE
 	if(get_dist(target, owner) > 3)
-		return ..()
+		return FALSE
 	if(!can_use_ability(target, override_flags = XACT_IGNORE_SELECTED_ABILITY))
-		return ..()
+		return FALSE
+	if(target.get_xeno_hivenumber() == owner.get_xeno_hivenumber())
+		return FALSE
 	return TRUE
 
 GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj/vehicle/multitile/root/cm_armored, /obj/structure/razorwire)))
@@ -75,7 +77,7 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 		if(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 			do_acid_cone_spray(owner.loc, range, facing, CONE_PART_MIDDLE_DIAG, owner, TRUE)
 			do_acid_cone_spray(owner.loc, range + 1, facing, CONE_PART_DIAG_LEFT|CONE_PART_DIAG_RIGHT, owner, TRUE)
-	
+
 ///Check if it's possible to create a spray, and if yes, check if the spray must continue
 /datum/action/xeno_action/activable/spray_acid/cone/proc/do_acid_cone_spray(turf/T, distance_left, facing, direction_flag, source_spray, skip_timer = FALSE)
 	if(distance_left <= 0)
@@ -92,21 +94,21 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 		return
 
 	var/mob/living/carbon/xenomorph/praetorian/xeno_owner = owner
-	
+
 	var/obj/effect/xenomorph/spray/spray = new(T, xeno_owner.xeno_caste.acid_spray_duration, xeno_owner.xeno_caste.acid_spray_damage, xeno_owner)
 	var/turf/next_normal_turf = get_step(T, facing)
 	for (var/atom/movable/A AS in T)
 		A.acid_spray_act(owner)
-		if(((A.density && !A.throwpass && !(A.flags_atom & ON_BORDER)) || !A.CheckExit(source_spray, next_normal_turf)) && !isxeno(A))
+		if(((A.density && !A.throwpass && !(A.flags_atom & ON_BORDER)) || !A.Exit(source_spray, facing)) && !isxeno(A))
 			is_blocked = TRUE
 	if(!is_blocked)
 		if(!skip_timer)
 			addtimer(CALLBACK(src, .proc/continue_acid_cone_spray, T, next_normal_turf, distance_left, facing, direction_flag, spray), 3)
 			return
 		continue_acid_cone_spray(T, next_normal_turf, distance_left, facing, direction_flag, spray)
-	
 
-///Call the next steps of the cone spray, 
+
+///Call the next steps of the cone spray,
 /datum/action/xeno_action/activable/spray_acid/cone/proc/continue_acid_cone_spray(turf/current_turf, turf/next_normal_turf, distance_left, facing, direction_flag, spray)
 	if(CHECK_BITFIELD(direction_flag, CONE_PART_MIDDLE))
 		do_acid_cone_spray(next_normal_turf, distance_left - 1 , facing, CONE_PART_MIDDLE, spray)

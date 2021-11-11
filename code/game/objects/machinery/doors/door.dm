@@ -41,12 +41,13 @@
 
 	if(width > 1)
 		handle_multidoor()
+	var/turf/current_turf = get_turf(src)
+	current_turf.flags_atom &= ~ AI_BLOCKED
 
 /obj/machinery/door/Destroy()
-	. = ..()
 	for(var/o in fillers)
 		qdel(o)
-	density = FALSE
+	return ..()
 
 /obj/machinery/door/proc/handle_multidoor()
 	fillers = list()
@@ -106,10 +107,6 @@
 			open()
 		else
 			flick("door_deny", src)
-
-
-/obj/machinery/door/attack_paw(mob/living/carbon/human/user)
-	return attack_hand(user)
 
 
 /obj/machinery/door/attack_hand(mob/living/user)
