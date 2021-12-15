@@ -286,6 +286,11 @@
 
 #define COMSIG_ITEM_UNDEPLOY "item_undeploy" //from base of /obj/machinery/deployable
 
+#define COMSIG_ATTACHMENT_ATTACHED "attachment_attached"
+#define COMSIG_ATTACHMENT_ATTACHED_TO_ITEM "attachment_attached_to_item"
+#define COMSIG_ATTACHMENT_DETACHED "attachment_detached"
+#define COMSIG_ATTACHMENT_DETACHED_FROM_ITEM "attachment_detached_from_item"
+
 #define COMSIG_LOADOUT_VENDOR_VENDED_GUN_ATTACHMENT "loadout_vended_gun_attachment" //from base of /datum/item_representation/gun_attachement/proc/install_on_gun() : (/obj/item/attachment)
 #define COMSIG_LOADOUT_VENDOR_VENDED_ARMOR_ATTACHMENT "loadout_vended_armor_attachment" //from base of /datum/item_representation/armor_module/proc/install_on_armor() : (/obj/item/attachment)
 
@@ -589,11 +594,11 @@
 
 #define COMSIG_XENOABILITY_LONG_RANGE_SIGHT "xenoability_long_range_sight"
 #define COMSIG_XENOABILITY_TOGGLE_BOMB "xenoability_toggle_bomb"
+#define COMSIG_XENOABILITY_TOGGLE_BOMB_RADIAL "xenoability_toggle_bomb_radial"
 #define COMSIG_XENOABILITY_CREATE_BOMB "xenoability_create_bomb"
 #define COMSIG_XENOABILITY_BOMBARD "xenoability_bombard"
 
 #define COMSIG_XENOABILITY_THROW_HUGGER "xenoability_throw_hugger"
-#define COMSIG_XENOABILITY_RETRIEVE_EGG "xenoability_retrieve_egg"
 #define COMSIG_XENOABILITY_PLACE_TRAP "xenoability_place_trap"
 #define COMSIG_XENOABILITY_SPAWN_HUGGER "xenoability_spawn_hugger"
 #define COMSIG_XENOABILITY_SWITCH_HUGGER "xenoability_switch_hugger"
@@ -674,6 +679,7 @@
 #define COMSIG_XENOABILITY_FLING "xenoability_fling"
 #define COMSIG_XENOABILITY_PUNCH "xenoability_punch"
 #define COMSIG_XENOABILITY_GRAPPLE_TOSS "xenoability_grapple_toss"
+#define COMSIG_XENOABILITY_JAB "xenoability_jab"
 
 #define COMSIG_XENOABILITY_PLACE_WARP_BEACON "xenoability_place_warp_shadow"
 #define COMSIG_XENOABILITY_HYPERPOSITION "xenoability_hyperposition"
