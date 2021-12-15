@@ -292,10 +292,18 @@
 
 	if(!isturf(loc)) //cdel'd or moved into something
 		return
+	finish_evolution(new_caste_type)
 
-
+/**
+* Finishes a caste's evolution. This assumes all neccessary checks have been performed and the end result caste type is valid.
+* Used by normal evolution aswell as the queen devolution ability.
+* * Args:
+* * caste_type: The caste to evolve / devolve to
+* * devolution: If this is being called by a queen's devolution ability.
+**/
+/mob/living/carbon/xenomorph/proc/finish_evolution(caste_type, devolution = FALSE)
 	//From there, the new xeno exists, hopefully
-	var/mob/living/carbon/xenomorph/new_xeno = new new_caste_type(get_turf(src))
+	var/mob/living/carbon/xenomorph/new_xeno = new caste_type(get_turf(src))
 
 	if(!istype(new_xeno))
 		//Something went horribly wrong!
@@ -340,14 +348,14 @@
 
 	new_xeno.update_spits() //Update spits to new/better ones
 
+	if(!devolution)
+		span_xenodanger("We emerge in a greater form from the husk of our old body. For the hive!"))
+	
 	new_xeno.visible_message(span_xenodanger("A [new_xeno.xeno_caste.caste_name] emerges from the husk of \the [src]."), \
-	span_xenodanger("We emerge in a greater form from the husk of our old body. For the hive!"))
+	var/turf/T = get_turf(new_xeno)
+	deadchat_broadcast(" has [devolution ? "been deevolved" : "evolved"] into a <b>[new_xeno.xeno_caste.caste_name]</b> at <b>[get_area_name(T)]</b>.", "<b>[src]</b>", follow_target = new_xeno, turf_target = T)
 
 	SEND_SIGNAL(hive, COMSIG_XENOMORPH_POSTEVOLVING, new_xeno)
-
-	var/turf/T = get_turf(new_xeno)
-	deadchat_broadcast(" has evolved into a <b>[new_xeno.xeno_caste.caste_name]</b> at <b>[get_area_name(T)]</b>.", "<b>[src]</b>", follow_target = new_xeno, turf_target = T)
-
 	GLOB.round_statistics.total_xenos_created-- //so an evolved xeno doesn't count as two.
 	SSblackbox.record_feedback("tally", "round_statistics", -1, "total_xenos_created")
 

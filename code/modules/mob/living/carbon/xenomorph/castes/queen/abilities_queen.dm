@@ -530,13 +530,7 @@
 		return
 
 	to_chat(T, span_xenowarning("The queen is deevolving us for the following reason: [reason]"))
-
-	T.do_evolve(new_caste.caste_type_path, new_caste.caste_name, TRUE)
-
 	log_game("[key_name(X)] has deevolved [key_name(T)]. Reason: [reason]")
 	message_admins("[ADMIN_TPMONTY(X)] has deevolved [ADMIN_TPMONTY(T)]. Reason: [reason]")
-
-	GLOB.round_statistics.total_xenos_created-- //so an evolved xeno doesn't count as two.
-	SSblackbox.record_feedback("tally", "round_statistics", -1, "total_xenos_created")
-	qdel(T)
+	T.finish_evolution(new_caste.caste_type_path, TRUE)
 	X.use_plasma(600)
