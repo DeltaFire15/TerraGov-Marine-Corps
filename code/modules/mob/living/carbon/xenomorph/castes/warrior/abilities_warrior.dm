@@ -73,6 +73,11 @@
 	if(!.)
 		return FALSE
 
+	if(get_dist_euclide_square(A, owner) > 36)
+		if(!silent)
+			to_chat(owner, span_xenonotice("You are too far!"))
+		return FALSE
+
 	if(!isliving(A)) //We can only lunge at the living; expanded to xenos in order to allow for supportive applications; lunging > throwing to safety
 		if(!silent)
 			to_chat(owner, span_xenodanger("We can't [name] at that!"))
@@ -84,7 +89,7 @@
 /datum/action/xeno_action/activable/lunge/ai_should_use(atom/target)
 	if(!iscarbon(target))
 		return FALSE
-	if(get_dist(target, owner) > 2)
+	if(!line_of_sight(owner, target, 2))
 		return FALSE
 	if(!can_use_ability(target, override_flags = XACT_IGNORE_SELECTED_ABILITY))
 		return FALSE
@@ -106,7 +111,6 @@
 	RegisterSignal(lunge_target, COMSIG_PARENT_QDELETING, .proc/clean_lunge_target)
 	RegisterSignal(X, COMSIG_MOVABLE_MOVED, .proc/check_if_lunge_possible)
 	RegisterSignal(X, COMSIG_MOVABLE_POST_THROW, .proc/clean_lunge_target)
-	RegisterSignal(X, COMSIG_MOVABLE_POST_THROW, .proc/finish_lunge)
 	X.throw_at(get_step_towards(A, X), 6, 2, X)
 
 	if(X.pulling && !isxeno(X.pulling)) //If we grabbed something give us combo.
@@ -369,7 +373,7 @@
 				to_chat(owner, span_xenodanger("We don't care about the dead!"))
 			return FALSE
 
-	if(!owner.line_of_sight(A, range))
+	if(!line_of_sight(owner, A, range))
 		if(!silent)
 			to_chat(owner, span_xenodanger("Our target must be closer!"))
 		return FALSE
@@ -473,14 +477,16 @@
 		var/datum/limb/L = carbon_victim.get_limb(target_zone)
 
 		if (!L || (L.limb_status & LIMB_DESTROYED))
-			to_chat(X, span_xenodanger("Our target is missing that limb!"))
-			return FALSE
+			target_zone = BODY_ZONE_CHEST
+			L =  carbon_victim.get_limb(target_zone)
 
 		if(L.limb_status & LIMB_SPLINTED) //If they have it splinted, the splint won't hold.
 			L.remove_limb_flags(LIMB_SPLINTED)
 			to_chat(src, span_danger("The splint on your [L.display_name] comes apart!"))
 
 		L.take_damage_limb(damage, 0, FALSE, FALSE, run_armor_check(target_zone))
+	else
+		apply_damage(damage, BRUTE, target_zone, run_armor_check(target_zone))
 
 	if(push)
 		var/facing = get_dir(X, src)
@@ -499,7 +505,6 @@
 
 		throw_at(T, 2, 1, X, 1) //Punch em away
 
-	apply_damage(damage, BRUTE, target_zone, run_armor_check(target_zone))
 	var/target_location_feedback = get_living_limb_descriptive_name(target_zone)
 	X.visible_message(span_xenodanger("\The [X] hits [src] in the [target_location_feedback] with a [punch_description] punch!"), \
 		span_xenodanger("We hit [src] in the [target_location_feedback] with a [punch_description] punch!"), visible_message_flags = COMBAT_MESSAGE)
