@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(/obj/item/clothing/mask/faceh
 	var/armor_type					= "bullet"	// Does this have an override for the armor type the ammo should test? Bullet by default
 	var/sundering					= 0 		// How many stacks of sundering to apply to a mob on hit
 	///how much damage airbursts do to mobs around the target, multiplier of the bullet's damage
-	var/airburst_multiplier	= 0.1		
+	var/airburst_multiplier	= 0.1
 	var/flags_ammo_behavior = NONE
 	///Determines what color our bullet will be when it flies
 	var/bullet_color = COLOR_WHITE
@@ -188,7 +188,7 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(/obj/item/clothing/mask/faceh
 			new_angle += 360
 		else if(new_angle > 360)
 			new_angle -= 360
-		new_proj.fire_at(shooter.Adjacent(target) ? target : null, shooter, source, range, speed, new_angle, TRUE) //Angle-based fire. No target.
+		new_proj.fire_at(shooter.Adjacent(target) ? target : null, main_proj.loc, source, range, speed, new_angle, TRUE) //Angle-based fire. No target.
 
 
 /datum/ammo/proc/drop_flame(turf/T)
@@ -957,6 +957,7 @@ datum/ammo/bullet/revolver/tp44
 	damage = 90
 	penetration = 0
 	sundering = 25
+	airburst_multiplier	= 0.2
 
 /datum/ammo/bullet/sniper/flak/on_hit_mob(mob/victim, obj/projectile/proj)
 	airburst(victim, proj)
@@ -1467,7 +1468,7 @@ datum/ammo/bullet/revolver/tp44
 	name = "pulse bolt"
 	icon_state = "pulse2"
 	hud_state = "pulse"
-	damage = 85 // this is gotta hurt...
+	damage = 90 // this is gotta hurt...
 	max_range = 40
 	penetration = 100
 	sundering = 100
@@ -2147,6 +2148,9 @@ datum/ammo/bullet/revolver/tp44
 	hit_eye_blur = 16
 	hit_drowsyness = 18
 	fixed_spread_range = 2
+	accuracy = 100
+	accurate_range = 30
+	shell_speed = 1.5
 
 /datum/ammo/xeno/boiler_gas/corrosive/lance
 	name = "pressurized glob of acid"
@@ -2163,6 +2167,9 @@ datum/ammo/bullet/revolver/tp44
 	hit_eye_blur = 4
 	hit_drowsyness = 2
 	fixed_spread_range = 2
+	accuracy = 100
+	accurate_range = 30
+	shell_speed = 1.5
 
 /datum/ammo/xeno/hugger
 	name = "hugger ammo"
