@@ -5,6 +5,7 @@
 	desc = "A stand with the empty body of a cyborg bolted to it."
 	density = TRUE
 	anchored = TRUE
+	coverage = 15
 
 /obj/structure/showcase/two
 	icon_state = "showcase_2"
@@ -171,11 +172,24 @@ obj/item/alienjar
 	density = FALSE
 	opacity = FALSE
 
+/obj/structure/stairs/seamless
+	icon_state = "stairs_seamless"
+
+/obj/structure/stairs/seamless/platform
+	icon_state = "railstairs_seamless"
+
+/obj/structure/stairs/seamless/platform/alt
+	icon_state = "railstairs_seamless_vert"
+
+
 /obj/structure/stairs/corner
 	icon_state = "staircorners"
 
 /obj/structure/stairs/cornerdark //darker version for the darkened ramp bottoms
 	icon_state = "staircornersdark"
+
+/obj/structure/stairs/cornerdark/seamless //darker version for the darkened ramp bottoms
+	icon_state = "staircorners_seamless"
 
 /obj/structure/stairs/railstairs
 	icon = 'icons/obj/structures/railstairs.dmi'

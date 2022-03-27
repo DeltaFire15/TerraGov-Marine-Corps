@@ -216,6 +216,8 @@
 	var/list/aim_fire_delay_mods = list()
 	///Determines character slowdown from aim mode. Default is 66%
 	var/aim_speed_modifier = 6
+	/// Time to enter aim mode, generally one second.
+	var/aim_time = 1 SECONDS
 
 	///How many shots can the weapon shoot in burst? Anything less than 2 and you cannot toggle burst.
 	var/burst_amount = 1
@@ -270,7 +272,8 @@
 		ATTACHMENT_SLOT_UNDER,
 		ATTACHMENT_SLOT_MAGAZINE,
 	)
-
+	///the current gun attachment, used for attachment aim mode
+	var/obj/item/weapon/gun/gunattachment = null
 /*
  * Gun as Attachment Vars
 */
@@ -294,6 +297,8 @@
 /*
  * Deployed and Sentry Vars
 */
+	///If the gun has a deployed item..
+	var/deployed_item = null
 
 	///If the gun is deployable, the time it takes for the weapon to deploy.
 	var/deploy_time = 0
@@ -336,11 +341,8 @@
 
 	muzzle_flash = new(src, muzzleflash_iconstate)
 
-	if(flags_item & IS_DEPLOYABLE)
-		if(flags_gun_features & GUN_IS_SENTRY)
-			AddElement(/datum/element/deployable_item, /obj/machinery/deployable/mounted/sentry, deploy_time, undeploy_time)
-		else
-			AddElement(/datum/element/deployable_item, /obj/machinery/deployable/mounted, deploy_time, undeploy_time)
+	if(deployed_item)
+		AddElement(/datum/element/deployable_item, deployed_item, deploy_time, undeploy_time)
 
 	GLOB.nightfall_toggleable_lights += src
 
