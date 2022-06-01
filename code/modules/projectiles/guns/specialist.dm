@@ -512,6 +512,8 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	pixel_shift_x = 18
 	pixel_shift_y = 16
 
+	wield_delay_mod	= 0.2 SECONDS
+
 //-------------------------------------------------------
 //M5 RPG
 
@@ -606,13 +608,11 @@ Note that this means that snipers will have a slowdown of 3, due to the scope
 	general_codex_key = "explosive weapons"
 	attachable_allowed = list(
 		/obj/item/attachable/magnetic_harness,
-		/obj/item/attachable/scope/mini,
 		/obj/item/attachable/buildasentry,
 	)
 
 	flags_gun_features = GUN_WIELDED_FIRING_ONLY|GUN_AMMO_COUNTER
 	gun_skill_category = GUN_SKILL_FIREARMS
-	starting_attachment_types = list(/obj/item/attachable/scope/mini)
 	dry_fire_sound = 'sound/weapons/guns/fire/launcher_empty.ogg'
 	reload_sound = 'sound/weapons/guns/interact/launcher_reload.ogg'
 	unload_sound = 'sound/weapons/guns/interact/launcher_reload.ogg'
