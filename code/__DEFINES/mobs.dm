@@ -51,9 +51,10 @@
 //Life variables
 #define CARBON_BREATH_DELAY 2 // The interval in life ticks between breathe()
 
-#define CARBON_MAX_OXYLOSS 3 //Defines how much oxyloss humans can get per breath tick. A tile with no air at all (such as space) applies this value, otherwise it's a percentage of it.
-#define CARBON_CRIT_MAX_OXYLOSS (round(SSmobs.wait/5, 0.1)) //The amount of damage you'll get when in critical condition.
-#define CARBON_RECOVERY_OXYLOSS -5 //the amount of oxyloss recovery per successful breath tick.
+///The amount of damage you'll take per tick when you can't breath. Default value is 1
+#define CARBON_CRIT_MAX_OXYLOSS (round(SSmobs.wait/5, 0.1))
+///the amount of oxyloss recovery per successful breath tick.
+#define CARBON_RECOVERY_OXYLOSS -5
 
 #define CARBON_KO_OXYLOSS 50
 #define HUMAN_CRITDRAG_OXYLOSS 3 //the amount of oxyloss taken per tile a human is dragged by a xeno while unconscious
@@ -154,6 +155,7 @@
 #define XENO_TIER_FOUR "four"
 
 GLOBAL_LIST_INIT(xenotiers, list(XENO_TIER_MINION, XENO_TIER_ZERO, XENO_TIER_ONE, XENO_TIER_TWO, XENO_TIER_THREE, XENO_TIER_FOUR))
+GLOBAL_LIST_INIT(tier_as_number, list(XENO_TIER_MINION = -1, XENO_TIER_ZERO = 0, XENO_TIER_ONE = 1, XENO_TIER_TWO = 2, XENO_TIER_THREE = 3, XENO_TIER_FOUR = 4))
 
 // =============================
 // xeno upgrades
@@ -210,6 +212,10 @@ GLOBAL_LIST_INIT(xenoupgradetiers, list(XENO_UPGRADE_BASETYPE, XENO_UPGRADE_INVA
 #define ORGAN_BRAIN 5
 #define ORGAN_EYES 6
 #define ORGAN_APPENDIX 7
+
+#define ORGAN_HEALTHY 0
+#define ORGAN_BRUISED 1
+#define ORGAN_BROKEN 2
 
 //Brain Damage defines
 #define BRAIN_DAMAGE_MILD 20
@@ -510,6 +516,14 @@ GLOBAL_LIST_INIT(xenoupgradetiers, list(XENO_UPGRADE_BASETYPE, XENO_UPGRADE_INVA
 #define CASTE_CAN_BECOME_KING (1<<8) //Can be choose to become a king
 #define CASTE_CAN_RIDE_CRUSHER (1<<9) //Can ride a crusher
 
+#define HIVE_STATUS_SHOW_EMPTY (1<<0)
+#define HIVE_STATUS_COMPACT_MODE (1<<1)
+#define HIVE_STATUS_SHOW_GENERAL (1<<2)
+#define HIVE_STATUS_SHOW_POPULATION (1<<3)
+#define HIVE_STATUS_SHOW_XENO_LIST (1<<4)
+#define HIVE_STATUS_SHOW_STRUCTURES (1<<5)
+#define HIVE_STATUS_DEFAULTS (HIVE_STATUS_SHOW_EMPTY | HIVE_STATUS_SHOW_GENERAL | HIVE_STATUS_SHOW_POPULATION | HIVE_STATUS_SHOW_XENO_LIST | HIVE_STATUS_SHOW_STRUCTURES)
+
 //Charge-Crush
 #define CHARGE_OFF 0
 #define CHARGE_BUILDINGUP 1
@@ -661,7 +675,6 @@ GLOBAL_LIST_INIT(xenoupgradetiers, list(XENO_UPGRADE_BASETYPE, XENO_UPGRADE_INVA
 #define WRAITH_BLINK_RANGE 3
 
 #define WRAITH_BANISH_BASE_DURATION 10 SECONDS
-#define WRAITH_BANISH_RANGE 3
 #define WRAITH_BANISH_NONFRIENDLY_LIVING_MULTIPLIER 0.5
 #define WRAITH_BANISH_VERY_SHORT_MULTIPLIER 0.3
 

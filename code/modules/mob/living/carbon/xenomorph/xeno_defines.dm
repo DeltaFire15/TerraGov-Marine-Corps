@@ -181,8 +181,6 @@
 	//Banish - Values for the Wraith's Banish ability
 	///Base duration of Banish before modifiers
 	var/wraith_banish_base_duration = WRAITH_BANISH_BASE_DURATION
-	///Base range of Banish
-	var/wraith_banish_range = WRAITH_BANISH_RANGE
 
 	//Blink - Values for the Wraith's Blink ability
 	///Cooldown multiplier of Blink when used on non-friendlies
@@ -257,6 +255,9 @@
 	var/hivenumber = XENO_HIVE_NORMAL
 
 	var/datum/hive_status/hive
+
+	///State tracking of hive status toggles
+	var/status_toggle_flags = HIVE_STATUS_DEFAULTS
 
 	var/list/overlays_standing[X_TOTAL_LAYERS]
 	var/atom/movable/vis_obj/xeno_wounds/wound_overlay
@@ -340,7 +341,7 @@
 
 	var/xeno_mobhud = FALSE //whether the xeno mobhud is activated or not.
 
-	var/queen_chosen_lead //whether the xeno has been selected by the queen as a leader.
+	var/queen_chosen_lead = FALSE //whether the xeno has been selected by the queen as a leader.
 
 	//Charge vars
 	var/is_charging = CHARGE_OFF //Will the mob charge when moving ? You need the charge verb to change this

@@ -17,6 +17,7 @@
 	trait_flags = TACHYCARDIC
 
 /datum/reagent/medicine/inaprovaline/on_mob_add(mob/living/L, metabolism)
+	ADD_TRAIT(L, TRAIT_IGNORE_SUFFOCATION, REAGENT_TRAIT(src))
 	var/mob/living/carbon/human/H = L
 	if(TIMER_COOLDOWN_CHECK(L, name) || L.stat == DEAD)
 		return
@@ -32,12 +33,12 @@
 				I.heal_organ_damage((I.damage-29) *effect_str)
 		TIMER_COOLDOWN_START(L, name, 300 SECONDS)
 
+/datum/reagent/medicine/inaprovaline/on_mob_delete(mob/living/L, metabolism)
+	REMOVE_TRAIT(L, TRAIT_IGNORE_SUFFOCATION, REAGENT_TRAIT(src))
+	return ..()
+
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/L, metabolism)
 	L.reagent_shock_modifier += PAIN_REDUCTION_LIGHT
-	if(iscarbon(L))
-		var/mob/living/carbon/C = L
-		if(C.losebreath > 10)
-			C.set_Losebreath(10)
 	return ..()
 
 /datum/reagent/medicine/inaprovaline/overdose_process(mob/living/L, metabolism)
@@ -520,17 +521,15 @@
 
 /datum/reagent/medicine/arithrazine
 	name = "Arithrazine"
-	description = "Arithrazine is an unstable medication used for minor cases of toxin poisoning."
+	description = "Arithrazine is a component medicine capable of healing very minor amounts of toxin poisoning."
 	color = "#C8A5DC" // rgb: 200, 165, 220
-	custom_metabolism = REAGENTS_METABOLISM
+	custom_metabolism = REAGENTS_METABOLISM * 1.25
 	overdose_threshold = REAGENTS_OVERDOSE/2
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL/2
 	scannable = TRUE
 
 /datum/reagent/medicine/arithrazine/on_mob_life(mob/living/L)
-	L.adjustToxLoss(-0.5*effect_str)
-	if(prob(15))
-		L.take_limb_damage(effect_str, 0)
+	L.adjustToxLoss(-0.2*effect_str)
 	return ..()
 
 /datum/reagent/medicine/arithrazine/overdose_process(mob/living/L, metabolism)
@@ -624,32 +623,6 @@
 
 /datum/reagent/medicine/imidazoline/overdose_crit_process(mob/living/L, metabolism)
 	L.apply_damages(0, effect_str, 2*effect_str)
-
-/datum/reagent/medicine/peridaxon
-	name = "Peridaxon"
-	description = "Used to stabilize internal organs while waiting for surgery, and fixes organ damage at cryogenic temperatures. Medicate cautiously."
-	color = "#C845DC"
-	overdose_threshold = REAGENTS_OVERDOSE/2
-	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL/2
-	custom_metabolism = REAGENTS_METABOLISM * 0.25
-	scannable = TRUE
-
-/datum/reagent/medicine/peridaxon/on_mob_life(mob/living/L, metabolism)
-	if(!ishuman(L))
-		return ..()
-	var/mob/living/carbon/human/H = L
-	for(var/datum/internal_organ/I in H.internal_organs)
-		if(I.damage)
-			if(L.bodytemperature > 169 && I.damage > 5)
-				continue
-			I.heal_organ_damage(effect_str)
-	return ..()
-
-/datum/reagent/medicine/peridaxon/overdose_process(mob/living/L, metabolism)
-	L.apply_damage(2*effect_str, BRUTE)
-
-/datum/reagent/peridaxon/overdose_crit_process(mob/living/L, metabolism)
-	L.apply_damages(effect_str, 3*effect_str, 3*effect_str)
 
 /datum/reagent/medicine/peridaxon_plus
 	name = "Peridaxon Plus"

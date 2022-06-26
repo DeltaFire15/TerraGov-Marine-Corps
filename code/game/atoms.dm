@@ -91,8 +91,6 @@
 	var/chat_color_darkened
 	///HUD images that this mob can provide.
 	var/list/hud_possible
-	///Reference to atom being orbited
-	var/atom/orbit_target
 
 	///Whether this atom smooths with things around it, and what type of smoothing if any.
 	var/smoothing_behavior = NO_SMOOTHING
@@ -578,8 +576,7 @@ Proc for attack log creation, because really why not
 
 /obj/item/update_filters()
 	. = ..()
-	for(var/X in actions)
-		var/datum/action/A = X
+	for(var/datum/action/A AS in actions)
 		A.update_button_icon()
 
 ///returns a filter in the managed filters list by name
