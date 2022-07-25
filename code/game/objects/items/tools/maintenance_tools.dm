@@ -199,7 +199,20 @@
 			var/mob/living/L = O
 			L.IgniteMob()
 
+/obj/proc/handle_weldingtool_overlay(removing = FALSE)
+	if(!removing)
+		add_overlay(GLOB.welding_sparks)
+	else
+		cut_overlay(GLOB.welding_sparks)
 
+/obj/item/tool/weldingtool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
+	if(isobj(target))
+		var/obj/O = target
+		O.handle_weldingtool_overlay()
+		. = ..()
+		O.handle_weldingtool_overlay(TRUE)
+	else
+		. = ..()
 
 /obj/item/tool/weldingtool/attack_self(mob/user as mob)
 	if(!status)

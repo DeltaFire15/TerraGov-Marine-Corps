@@ -28,17 +28,12 @@
 	icon_state = "x"
 	anchored = TRUE
 	layer = MOB_LAYER
-	var/jobspawn_override = FALSE
 	var/delete_after_roundstart = TRUE
 	var/used = FALSE
 
 
 /obj/effect/landmark/start/Initialize()
 	GLOB.start_landmarks_list += src
-	if(jobspawn_override)
-		if(!GLOB.jobspawn_overrides[name])
-			GLOB.jobspawn_overrides[name] = list()
-		GLOB.jobspawn_overrides[name] += src
 	. = ..()
 	if(name != "start")
 		tag = "start*[name]"
@@ -46,8 +41,6 @@
 
 /obj/effect/landmark/start/Destroy()
 	GLOB.start_landmarks_list -= src
-	if(jobspawn_override)
-		GLOB.jobspawn_overrides[name] -= src
 	return ..()
 
 
@@ -285,7 +278,7 @@
 		/obj/item/weapon/gun/pistol/m1911/custom,
 		/obj/item/weapon/gun/revolver/mateba,
 		/obj/item/weapon/gun/revolver/mateba/notmarine,
-		/obj/item/weapon/gun/revolver/mateba/captain,
+		/obj/item/weapon/gun/revolver/mateba/custom,
 		/obj/item/weapon/gun/smg/standard_machinepistol,
 		/obj/item/weapon/gun/smg/standard_smg,
 		/obj/item/weapon/gun/smg/m25,
