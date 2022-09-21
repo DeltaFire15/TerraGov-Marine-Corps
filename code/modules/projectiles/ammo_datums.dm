@@ -1481,7 +1481,7 @@ datum/ammo/bullet/revolver/tp44
 	var/datum/effect_system/smoke_spread/smoke = new smoketype()
 	smoke.set_up(0, T, rand(1,2))
 	smoke.start()
-	for(var/mob/living/carbon/victim in range(2, T))
+	for(var/mob/living/carbon/victim in get_hear(2, T))
 		victim.visible_message(span_danger("[victim] is hit by the bomblet blast!"),
 			isxeno(victim) ? span_xenodanger("We are hit by the bomblet blast!") : span_highdanger("you are hit by the bomblet blast!"))
 		var/armor_block = victim.get_soft_armor("bomb")
@@ -1496,13 +1496,13 @@ datum/ammo/bullet/revolver/tp44
 		proj.proj_max_range = proj.distance_travelled
 
 /datum/ammo/micro_rail_cluster/on_hit_mob(mob/M, obj/projectile/P)
-	detonate(get_turf(M), P)
+	detonate(get_turf(P), P)
 
 /datum/ammo/micro_rail_cluster/on_hit_obj(obj/O, obj/projectile/P)
-	detonate(get_turf(O), P)
+	detonate(get_turf(P), P)
 
 /datum/ammo/micro_rail_cluster/on_hit_turf(turf/T, obj/projectile/P)
-	detonate(T, P)
+	detonate(get_turf(P), P)
 
 /datum/ammo/micro_rail_cluster/do_at_max_range(obj/projectile/P)
 	detonate(get_turf(P), P)
@@ -1532,13 +1532,13 @@ datum/ammo/bullet/revolver/tp44
 	smoke.start()
 
 /datum/ammo/smoke_burst/on_hit_mob(mob/M, obj/projectile/P)
-	drop_nade(get_turf(M))
+	drop_nade(get_turf(P))
 
 /datum/ammo/smoke_burst/on_hit_obj(obj/O, obj/projectile/P)
-	drop_nade(get_turf(O))
+	drop_nade(get_turf(P))
 
 /datum/ammo/smoke_burst/on_hit_turf(turf/T, obj/projectile/P)
-	drop_nade(T)
+	drop_nade(get_turf(P))
 
 /datum/ammo/smoke_burst/do_at_max_range(obj/projectile/P)
 	drop_nade(get_turf(P))
@@ -1569,7 +1569,7 @@ datum/ammo/bullet/revolver/tp44
 	bullet_color = LIGHT_COLOR_FIRE
 
 /datum/ammo/rocket/drop_nade(turf/T)
-	explosion(T, 0, 4, 6, 5)
+	explosion(T, 0, 4, 6, 2)
 
 /datum/ammo/rocket/on_hit_mob(mob/M, obj/projectile/P)
 	drop_nade(get_turf(M))
@@ -1693,7 +1693,7 @@ datum/ammo/bullet/revolver/tp44
 	sundering = 50
 
 /datum/ammo/rocket/recoilless/drop_nade(turf/T)
-	explosion(T, 0, 3, 4, 5)
+	explosion(T, 0, 3, 4, 2)
 
 /datum/ammo/rocket/recoilless/heat
 	name = "HEAT shell"
@@ -1716,7 +1716,7 @@ datum/ammo/bullet/revolver/tp44
 	sundering = 25
 
 /datum/ammo/rocket/recoilless/light/drop_nade(turf/T)
-	explosion(T, 0, 1, 8, 5)
+	explosion(T, 0, 1, 8, 1)
 
 /datum/ammo/rocket/recoilless/chemical
 	name = "low velocity chemical shell"
@@ -1760,7 +1760,7 @@ datum/ammo/bullet/revolver/tp44
 	sundering = 25
 
 /datum/ammo/rocket/recoilless/low_impact/drop_nade(turf/T)
-	explosion(T, 0, 1, 8, 3)
+	explosion(T, 0, 1, 8, 2)
 
 /datum/ammo/rocket/oneuse
 	name = "explosive rocket"
