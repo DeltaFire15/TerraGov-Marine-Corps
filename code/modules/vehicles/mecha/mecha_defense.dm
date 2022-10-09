@@ -244,15 +244,28 @@
 	if(user.a_intent == INTENT_HARM)
 		return
 	. = TRUE
-	if(obj_integrity < max_integrity)
-		if(!W.use_tool(src, user, 0, volume=50, amount=1))
-			return
-		user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to [src]."))
-		obj_integrity += min(10, max_integrity-obj_integrity)
-		if(obj_integrity == max_integrity)
-			to_chat(user, span_notice("It looks to be fully repaired now."))
+	if(LAZYFIND(user.do_actions, src))
+		balloon_alert(user, "you're already repairing this!")
 		return
-	to_chat(user, span_warning("[src] is at full integrity!"))
+	if(obj_integrity >= max_integrity)
+		balloon_alert(user, "it's not damaged!")
+		return
+	if(!W.tool_start_check(user, amount=1))
+		return
+	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
+	audible_message(span_hear("You hear welding."))
+	var/did_the_thing
+	while(obj_integrity < max_integrity)
+		if(W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
+			did_the_thing = TRUE
+			obj_integrity += min(10, (max_integrity - obj_integrity))
+			audible_message(span_hear("You hear welding."))
+		else
+			break
+	if(did_the_thing)
+		user.balloon_alert_to_viewers("[(obj_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
+	else
+		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
 	obj_integrity = max_integrity
@@ -314,7 +327,11 @@
 			gun.projectiles_cache = gun.projectiles_cache + reload_box.rounds
 		playsound(get_turf(user),reload_box.load_audio,50,TRUE)
 		to_chat(user, span_notice("You add [reload_box.rounds] [reload_box.ammo_type][reload_box.rounds > 1?"s":""] to the [gun.name]"))
+		if(reload_box.qdel_on_empty)
+			qdel(reload_box)
+			return TRUE
 		reload_box.rounds = 0
+		reload_box.update_icon()
 		return TRUE
 	if(!fail_chat_override)
 		if(found_gun)

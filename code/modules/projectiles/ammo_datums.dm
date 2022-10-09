@@ -250,9 +250,9 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(/obj/item/clothing/mask/faceh
 		var/obj/projectile/new_proj = new proj_type(main_proj.loc, effect_icon)
 		if(bonus_projectiles_type)
 			new_proj.generate_bullet(bonus_projectiles_type)
-			var/obj/item/weapon/gun/g = source
-			if(source) //Check for the source so we don't runtime if we have bonus projectiles from a non-gun source like a Spitter
-				new_proj.damage *= g.damage_mult //Bonus or reduced damage based on damage modifiers on the gun.
+			if(isgun(source)) //Check for the source so we don't runtime if we have bonus projectiles from a non-gun source like a Spitter
+				var/obj/item/weapon/gun/gun = source
+				new_proj.damage *= gun.damage_mult //Bonus or reduced damage based on damage modifiers on the gun.
 		else //If no bonus type is defined then the extra projectiles are the same as the main one.
 			new_proj.generate_bullet(src)
 
@@ -387,6 +387,18 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(/obj/item/clothing/mask/faceh
 /datum/ammo/bullet/pistol/superheavy/derringer
 	handful_amount = 2
 	handful_icon_state = "derringer"
+
+/datum/ammo/bullet/pistol/mech
+	name = "super-heavy pistol bullet"
+	damage = 40
+	penetration = 15
+	sundering = 1
+
+/datum/ammo/bullet/pistol/mech/burst
+	name = "super-heavy pistol bullet"
+	damage = 35
+	penetration = 10
+	sundering = 0.5
 
 /datum/ammo/bullet/pistol/incendiary
 	name = "incendiary pistol bullet"
@@ -565,6 +577,12 @@ datum/ammo/bullet/revolver/tp44
 	penetration = 0
 
 
+/datum/ammo/bullet/smg/mech
+	name = "super-heavy submachinegun bullet"
+	damage = 20
+	sundering = 0.25
+	penetration = 10
+
 /*
 //================================================
 					Rifle Ammo
@@ -707,6 +725,21 @@ datum/ammo/bullet/revolver/tp44
 	sundering = 0 // incen doens't have sundering
 	accuracy = -10
 
+/datum/ammo/bullet/rifle/mech
+	name = "super-heavy rifle bullet"
+	damage = 25
+	penetration = 15
+	sundering = 0.5
+	damage_falloff = 0.8
+
+/datum/ammo/bullet/rifle/mech/burst
+	damage = 30
+	penetration = 10
+
+/datum/ammo/bullet/rifle/mech/lmg
+	damage = 20
+	penetration = 20
+	damage_type = 0.7
 
 /*
 //================================================
@@ -998,6 +1031,26 @@ datum/ammo/bullet/revolver/tp44
 	victim.AddComponent(/datum/component/dripping, DRIP_ON_TIME, 40 SECONDS, 2 SECONDS)
 
 
+/datum/ammo/bullet/shotgun/mech
+	name = "super-heavy shotgun buckshot shell"
+	icon_state = "buckshot"
+	hud_state = "shotgun_buckshot"
+	bonus_projectiles_type = /datum/ammo/bullet/shotgun/mech/spread
+	bonus_projectiles_amount = 4
+	bonus_projectiles_scatter = 10
+	accuracy_var_low = 10
+	accuracy_var_high = 10
+	max_range = 10
+	damage = 60
+	damage_falloff = 4
+
+/datum/ammo/bullet/shotgun/mech/spread
+	name = "super-heavy additional buckshot"
+	icon_state = "buckshot"
+	max_range = 10
+	damage = 50
+	damage_falloff = 4
+
 /*
 //================================================
 					Sniper Ammo
@@ -1103,6 +1156,14 @@ datum/ammo/bullet/revolver/tp44
 	sundering = 2
 	damage_falloff = 0.25
 
+/datum/ammo/bullet/sniper/mech
+	name = "light anti-tank bullet"
+	flags_ammo_behavior = AMMO_BALLISTIC|AMMO_SUNDERING|AMMO_SNIPER|AMMO_IFF
+	damage = 100
+	penetration = 35
+	sundering = 5
+	damage_falloff = 0.3
+
 /*
 //================================================
 					Special Ammo
@@ -1181,6 +1242,12 @@ datum/ammo/bullet/revolver/tp44
 	shrapnel_chance = 25
 	sundering = 2.5
 
+/datum/ammo/bullet/minigun/mech
+	name = "vulcan bullet"
+	damage = 30
+	penetration = 20
+	sundering = 0.5
+
 /datum/ammo/bullet/dual_cannon
 	name = "dualcannon bullet"
 	hud_state = "minigun"
@@ -1239,6 +1306,18 @@ datum/ammo/bullet/revolver/tp44
 /datum/ammo/bullet/railgun/smart/on_hit_mob(mob/M, obj/projectile/P)
 	staggerstun(M, P, stagger = 3, slowdown = 3, shake = 0)
 
+/datum/ammo/bullet/apfsds
+	name = "\improper APFSDS round"
+	hud_state = "alloy_spike"
+	icon_state 	= "blue_bullet"
+	flags_ammo_behavior = AMMO_BALLISTIC|AMMO_SUNDERING|AMMO_PASS_THROUGH_TURF|AMMO_PASS_THROUGH_MOVABLE
+	shell_speed = 4
+	max_range = 14
+	damage = 150
+	penetration = 100
+	sundering = 20
+	bullet_color = COLOR_PULSE_BLUE
+	on_pierce_multiplier = 0.85
 
 /datum/ammo/tx54
 	name = "20mm airburst grenade"
@@ -1356,6 +1435,18 @@ datum/ammo/bullet/revolver/tp44
 
 /datum/ammo/tx54/he/do_at_max_range(turf/T, obj/projectile/P)
 	drop_nade(T.density ? P.loc : T)
+
+/datum/ammo/tx54/mech
+	name = "30mm fragmentation grenade"
+	bonus_projectiles_type = /datum/ammo/bullet/tx54_spread/mech
+	damage = 35
+	penetration = 20
+	projectile_greyscale_colors = "#4f0303"
+
+/datum/ammo/bullet/tx54_spread/mech
+	damage = 35
+	penetration = 20
+	sundering = 3
 
 //10-gauge Micro rail shells - aka micronades
 /datum/ammo/bullet/micro_rail
@@ -1601,6 +1692,14 @@ datum/ammo/bullet/revolver/tp44
 
 /datum/ammo/rocket/ltb/drop_nade(turf/T)
 	explosion(T, 0, 4, 6, 7)
+
+/datum/ammo/rocket/mech
+	name = "large high-explosive rocket"
+	damage = 75
+	penetration = 50
+
+/datum/ammo/rocket/mech/drop_nade(turf/T)
+	explosion(T, 0, 2, 4, 5)
 
 /datum/ammo/rocket/heavy_rr
 	name = "75mm round"
@@ -2153,8 +2252,25 @@ datum/ammo/bullet/revolver/tp44
 /datum/ammo/energy/lasgun/marine/heavy_laser/do_at_max_range(turf/T, obj/projectile/P)
 	drop_nade(T.density ? P.loc : T)
 
-// Plasma //
+/datum/ammo/energy/lasgun/marine/mech
+	name = "superheated laser bolt"
+	damage = 40
+	penetration = 20
+	sundering = 1
+	damage_falloff = 0.5
 
+/datum/ammo/energy/lasgun/marine/mech/burst
+	damage = 50
+	penetration = 20
+	sundering = 0.75
+	damage_falloff = 0.6
+
+/datum/ammo/energy/lasgun/marine/mech/smg
+	name = "superheated pulsed laser bolt"
+	damage = 35
+	penetration = 15
+
+// Plasma //
 /datum/ammo/energy/plasma
 	name = "plasma bolt"
 	icon_state = "pulse2"
@@ -2757,6 +2873,78 @@ datum/ammo/bullet/revolver/tp44
 /datum/ammo/xeno/hugger/acid
 	hugger_type = /obj/item/clothing/mask/facehugger/combat/acid
 
+/// For Widows Web Spit Ability
+/datum/ammo/xeno/web
+	icon_state = "web_spit"
+	sound_hit = "snap"
+	sound_bounce = "alien_resin_build3"
+	damage_type = STAMINA
+	bullet_color = COLOR_PURPLE
+	flags_ammo_behavior = AMMO_SKIPS_ALIENS
+	ping = null
+	armor_type = BIO
+	accurate_range = 15
+	max_range = 15
+	///For how long the victim will be blinded
+	var/hit_eye_blind = 1
+	///How long the victim will be snared for
+	var/hit_immobilize = 2 SECONDS
+	///How long the victim will be KO'd
+	var/hit_weaken = 1
+	///List for bodyparts that upon being hit cause the target to become weakened
+	var/list/weaken_list = list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
+	///List for bodyparts that upon being hit cause the target to become ensnared
+	var/list/snare_list = list(BODY_ZONE_R_LEG, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_LEG, BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT)
+
+/datum/ammo/xeno/web/on_hit_mob(mob/victim, obj/projectile/proj)
+	. = ..()
+	if(!ishuman(victim))
+		return
+	playsound(get_turf(victim), sound(get_sfx("snap")), 30, falloff = 5)
+	var/mob/living/carbon/human/human_victim = victim
+	if(proj.def_zone == BODY_ZONE_HEAD)
+		human_victim.blind_eyes(hit_eye_blind)
+		human_victim.balloon_alert(human_victim, "The web blinds you!")
+	else if(proj.def_zone in weaken_list)
+		human_victim.apply_effect(hit_weaken, WEAKEN)
+		human_victim.balloon_alert(human_victim, "The web knocks you down!")
+	else if(proj.def_zone in snare_list)
+		human_victim.Immobilize(hit_immobilize, TRUE)
+		human_victim.balloon_alert(human_victim, "The web snares you!")
+
+/datum/ammo/xeno/leash_ball
+	icon_state = "widow_snareball"
+	ping = "ping_x"
+	damage_type = STAMINA
+	flags_ammo_behavior = AMMO_SKIPS_ALIENS | AMMO_EXPLOSIVE
+	bullet_color = COLOR_PURPLE
+	ping = null
+	damage = 0
+	armor_type = BIO
+	shell_speed = 1.5
+	accurate_range = 8
+	max_range = 8
+
+/datum/ammo/xeno/leash_ball/on_hit_turf(turf/T, obj/projectile/proj)
+	drop_leashball(T.density ? proj.loc : T)
+
+/datum/ammo/xeno/leash_ball/on_hit_mob(mob/victim, obj/projectile/proj)
+	var/turf/T = get_turf(victim)
+	drop_leashball(T.density ? proj.loc : T, proj.firer)
+
+/datum/ammo/xeno/leash_ball/on_hit_obj(obj/O, obj/projectile/proj)
+	var/turf/T = get_turf(O)
+	if(T.density || (O.density && !O.throwpass))
+		T = get_turf(proj)
+	drop_leashball(T.density ? proj.loc : T, proj.firer)
+
+/datum/ammo/xeno/leash_ball/do_at_max_range(turf/T, obj/projectile/proj)
+	drop_leashball(T.density ? proj.loc : T)
+
+
+/// This spawns a leash ball and checks if the turf is dense before doing so
+/datum/ammo/xeno/leash_ball/proc/drop_leashball(turf/T)
+	new /obj/structure/xeno/aoe_leash(get_turf(T))
 /*
 //================================================
 					Misc Ammo
@@ -2843,6 +3031,11 @@ datum/ammo/bullet/revolver/tp44
 	if(!istype(T))
 		return
 	flame_radius(2, T)
+
+/datum/ammo/flamethrower/mech_flamer/drop_flame(turf/T)
+	if(!istype(T))
+		return
+	flame_radius(1, T)
 
 /datum/ammo/flamethrower/blue
 	name = "blue flame"
