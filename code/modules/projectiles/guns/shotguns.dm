@@ -603,14 +603,8 @@
 	desc = "The Terran Armories SH-35 is the shotgun used by the TerraGov Marine Corps. It's used as a close quarters tool when someone wants something more suited for close range than most people, or as an odd sidearm on your back for emergencies. Uses 12 gauge shells.\n<b>Requires a pump, which is the Unique Action key.</b>"
 	icon = 'icons/Marine/gun64.dmi'
 	flags_equip_slot = ITEM_SLOT_BACK
-	icon_state = GUN_ICONSTATE_LOADED
+	icon_state = "t35"
 	item_state = "t35"
-	item_icons = list(
-		slot_l_hand_str = /datum/greyscale_config/gun/worn/l_hand/t35,
-		slot_r_hand_str = /datum/greyscale_config/gun/worn/r_hand/t35,
-		slot_back_str = /datum/greyscale_config/gun/worn/t35,
-		slot_s_store_str = /datum/greyscale_config/gun/worn/suit/t35,
-	)
 	cock_animation = "t35_pump"
 	default_ammo_type = /datum/ammo/bullet/shotgun/buckshot
 	fire_sound = 'sound/weapons/guns/fire/t35.ogg'
@@ -645,7 +639,6 @@
 	cock_delay = 14
 
 	placed_overlay_iconstate = "t35"
-	greyscale_config = /datum/greyscale_config/gun/t35
 
 //buckshot variants
 /obj/item/weapon/gun/shotgun/pump/t35/pointman
@@ -697,6 +690,9 @@
 	burst_scatter_mult = 2 // 2x4=8
 	accuracy_mult = 1
 
+/obj/item/weapon/gun/shotgun/zx76/standard
+	starting_attachment_types = list(/obj/item/attachable/bayonet, /obj/item/attachable/magnetic_harness, /obj/item/attachable/verticalgrip)
+
 //-------------------------------------------------------
 //V-51 SOM shotgun
 
@@ -743,6 +739,19 @@
 /obj/item/weapon/gun/shotgun/som/support
 	default_ammo_type = /datum/ammo/bullet/shotgun/flechette
 	starting_attachment_types = list(/obj/item/attachable/bayonet, /obj/item/attachable/magnetic_harness)
+
+/obj/item/weapon/gun/shotgun/som/burst
+	name = "\improper V-51B assault shotgun"
+	desc = "V-51B custom. An upgraded version of the standard SOM shotgun with a burst fire mode and a snazzy paintjob. Rare as it is deadly."
+	icon_state = "v51b"
+	burst_amount = 2
+	burst_delay = 0.5 SECONDS
+	extra_delay = -0.2 SECONDS
+	default_ammo_type = /datum/ammo/bullet/shotgun/flechette
+
+/obj/item/weapon/gun/shotgun/som/burst/pointman
+	default_ammo_type = /datum/ammo/bullet/shotgun/flechette
+	starting_attachment_types = list(/obj/item/attachable/bayonet, /obj/item/attachable/motiondetector)
 
 //-------------------------------------------------------
 //Inbuilt launcher for the V-31

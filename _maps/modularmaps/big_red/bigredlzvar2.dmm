@@ -30,6 +30,10 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone,
 /turf/closed/mineral/smooth/bigred,
 /area/bigredv2/caves/rock)
+"bq" = (
+/obj/effect/mapping_helpers/area_flag_injector/marine_base,
+/turf/open/floor/tile/dark,
+/area/bigredv2/outside/telecomm)
 "br" = (
 /obj/item/shard,
 /obj/effect/decal/cleanable/blood/gibs,
@@ -88,9 +92,7 @@
 	},
 /area/bigredv2/outside/space_port)
 "cX" = (
-/obj/structure/showcase{
-	icon_state = "broadcaster_send"
-	},
+/obj/structure/prop/mainship/telecomms,
 /turf/open/floor/podhatch/floor,
 /area/bigredv2/outside/telecomm)
 "df" = (
@@ -1207,9 +1209,7 @@
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/space_port)
 "HX" = (
-/obj/structure/showcase{
-	icon_state = "bus"
-	},
+/obj/structure/prop/mainship/telecomms/bus,
 /turf/open/floor/podhatch/floor,
 /area/bigredv2/outside/telecomm)
 "Ic" = (
@@ -2446,7 +2446,7 @@ lH
 pS
 jz
 Fm
-dS
+bq
 dS
 cX
 Id

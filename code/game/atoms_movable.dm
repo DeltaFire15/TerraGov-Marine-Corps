@@ -127,10 +127,14 @@
 		orbiting = null
 
 	vis_contents.Cut()
+	vis_locs = null
 
 	//We add ourselves to this list, best to clear it out
 	//DO it after moveToNullspace so memes can be had
 	LAZYCLEARLIST(important_recursive_contents)
+
+	QDEL_NULL(light)
+	QDEL_NULL(static_light)
 
 ///Updates this movables emissive overlay
 /atom/movable/proc/update_emissive_block()
@@ -516,7 +520,7 @@
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
-					sleep(1)
+					sleep(0.1 SECONDS)
 			else
 				var/atom/step = get_step(src, dx)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -531,7 +535,7 @@
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
-					sleep(1)
+					sleep(0.1 SECONDS)
 	else
 		var/error = dist_y/2 - dist_x
 		while(!gc_destroyed && target &&((((y < target.y && dy == NORTH) || (y > target.y && dy == SOUTH)) && dist_travelled < range) || isspaceturf(loc)) && (throwing||flying) && istype(loc, /turf))
@@ -550,7 +554,7 @@
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
-					sleep(1)
+					sleep(0.1 SECONDS)
 			else
 				var/atom/step = get_step(src, dy)
 				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
@@ -565,7 +569,7 @@
 				dist_since_sleep++
 				if(dist_since_sleep >= speed)
 					dist_since_sleep = 0
-					sleep(1)
+					sleep(0.1 SECONDS)
 
 	//done throwing, either because it hit something or it finished moving
 	if(!originally_dir_locked)
@@ -678,7 +682,7 @@
 	if(!I)
 		return
 
-	flick_overlay(I, GLOB.clients, 0.5 SECONDS)
+	flick_overlay_view(I, A, 0.5 SECONDS)
 
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
@@ -692,6 +696,7 @@
 	.["Send"] = "?_src_=vars;[HrefToken()];sendatom=[REF(src)]"
 	.["Delete All Instances"] = "?_src_=vars;[HrefToken()];delall=[REF(src)]"
 	.["Update Icon"] = "?_src_=vars;[HrefToken()];updateicon=[REF(src)]"
+	.["Edit Particles"] = "?_src_=vars;[HrefToken()];modify_particles=[REF(src)]"
 
 
 /atom/movable/proc/get_language_holder(shadow = TRUE)
@@ -805,11 +810,11 @@
 	return throw_at(target, range, speed, thrower, spin)
 
 
-/atom/movable/proc/start_pulling(atom/movable/AM, suppress_message = FALSE)
+/atom/movable/proc/start_pulling(atom/movable/AM, force = move_force, suppress_message = FALSE)
 	if(QDELETED(AM))
 		return FALSE
 
-	if(!(AM.can_be_pulled(src)))
+	if(!(AM.can_be_pulled(src, force)))
 		return FALSE
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
@@ -895,7 +900,7 @@
 		pulledby.stop_pulling()
 
 
-/atom/movable/proc/can_be_pulled(user)
+/atom/movable/proc/can_be_pulled(user, force)
 	if(src == user || !isturf(loc))
 		return FALSE
 	if(anchored || throwing)
@@ -903,6 +908,8 @@
 	if(buckled && buckle_flags & BUCKLE_PREVENTS_PULL)
 		return FALSE
 	if(status_flags & INCORPOREAL) //Incorporeal things can't be grabbed.
+		return FALSE
+	if(force < (move_resist * MOVE_FORCE_PULL_RATIO))
 		return FALSE
 	return TRUE
 

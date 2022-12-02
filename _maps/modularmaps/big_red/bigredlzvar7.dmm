@@ -276,7 +276,6 @@
 "gt" = (
 /obj/effect/attach_point/weapon/dropship1{
 	dir = 8;
-	icon_state = "equip_base_l_wing"
 	},
 /turf/open/floor/plating/icefloor/warnplate{
 	dir = 8
@@ -292,9 +291,7 @@
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/marshal_office)
 "gC" = (
-/obj/structure/showcase{
-	icon_state = "broadcaster_send"
-	},
+/obj/structure/prop/mainship/telecomms,
 /turf/open/floor/podhatch/floor,
 /area/bigredv2/outside/telecomm)
 "gF" = (
@@ -337,9 +334,7 @@
 	},
 /area/bigredv2/outside/space_port)
 "hs" = (
-/obj/structure/showcase{
-	icon_state = "bus"
-	},
+/obj/structure/prop/mainship/telecomms/bus,
 /turf/open/floor/podhatch/floor,
 /area/bigredv2/outside/telecomm)
 "hx" = (
@@ -1085,6 +1080,10 @@
 	},
 /turf/open/floor/marking/asteroidwarning,
 /area/bigredv2/outside/nw)
+"Ao" = (
+/obj/effect/mapping_helpers/area_flag_injector/marine_base,
+/turf/open/floor/tile/dark,
+/area/bigredv2/outside/telecomm)
 "Au" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/landinglight/ds1/delaytwo{
@@ -1738,8 +1737,8 @@
 /turf/open/floor,
 /area/bigredv2/outside/marshal_office)
 "Pj" = (
-/obj/effect/decal/warning_stripes{
-	icon_state = "W-corner"
+/obj/effect/decal/warning_stripes/linethick{
+	dir = 8
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/telecomm)
@@ -2641,7 +2640,7 @@ kP
 BA
 UF
 Dl
-kN
+Ao
 kN
 gC
 UY

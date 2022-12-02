@@ -35,6 +35,8 @@
 	 * after the end of the last round with the gamemode type
 	 */
 	var/time_between_round = 0
+	///What factions are used in this gamemode, typically TGMC and xenos
+	var/list/factions = list(FACTION_TERRAGOV, FACTION_ALIEN)
 
 //Distress call variables.
 	var/list/datum/emergency_call/all_calls = list() //initialized at round start and stores the datums.
@@ -43,6 +45,15 @@
 	var/waiting_for_candidates = FALSE
 	/// Ponderation rate of silos output. 1 is normal, 2 is twice
 	var/silo_scaling = 1
+
+	///If the gamemode has a whitelist of valid ship maps. Whitelist overrides the blacklist
+	var/list/whitelist_ship_maps
+	///If the gamemode has a blacklist of disallowed ship maps
+	var/list/blacklist_ship_maps = list(MAP_COMBAT_PATROL_BASE, MAP_TWIN_PILLARS)
+	///If the gamemode has a whitelist of valid ground maps. Whitelist overrides the blacklist
+	var/list/whitelist_ground_maps
+	///If the gamemode has a blacklist of disallowed ground maps
+	var/list/blacklist_ground_maps = list(MAP_WHISKEY_OUTPOST)
 
 
 /datum/game_mode/New()
@@ -404,6 +415,8 @@ GLOBAL_LIST_INIT(bioscan_locations, list(
 		dat += "[GLOB.round_statistics.mortar_shells_fired] mortar shells were fired."
 	if(GLOB.round_statistics.howitzer_shells_fired)
 		dat += "[GLOB.round_statistics.howitzer_shells_fired] howitzer shells were fired."
+	if(GLOB.round_statistics.rocket_shells_fired)
+		dat += "[GLOB.round_statistics.rocket_shells_fired] rocket artillery shells were fired."
 	if(GLOB.round_statistics.total_human_deaths[FACTION_TERRAGOV])
 		dat += "[GLOB.round_statistics.total_human_deaths[FACTION_TERRAGOV]] people were killed, among which [GLOB.round_statistics.total_human_revives[FACTION_TERRAGOV]] were revived and [GLOB.round_statistics.total_human_respawns] respawned. For a [(GLOB.round_statistics.total_human_revives[FACTION_TERRAGOV] / max(GLOB.round_statistics.total_human_deaths[FACTION_TERRAGOV], 1)) * 100]% revival rate and a [(GLOB.round_statistics.total_human_respawns / max(GLOB.round_statistics.total_human_deaths[FACTION_TERRAGOV], 1)) * 100]% respawn rate."
 	if(SSevacuation.human_escaped)

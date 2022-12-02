@@ -164,7 +164,6 @@
 "el" = (
 /obj/effect/attach_point/weapon/dropship1{
 	dir = 8;
-	icon_state = "equip_base_l_wing"
 	},
 /turf/open/floor/plating/icefloor/warnplate{
 	dir = 8
@@ -596,6 +595,10 @@
 	},
 /turf/open/floor/asteroidfloor,
 /area/bigredv2/outside/space_port)
+"pb" = (
+/obj/effect/mapping_helpers/area_flag_injector/marine_base,
+/turf/open/floor/tile/dark,
+/area/bigredv2/outside/telecomm)
 "pc" = (
 /obj/machinery/computer/telecomms/server,
 /turf/open/floor/tile/dark,
@@ -616,9 +619,7 @@
 /turf/open/floor/plating,
 /area/bigredv2/outside/space_port)
 "pX" = (
-/obj/structure/showcase{
-	icon_state = "broadcaster_send"
-	},
+/obj/structure/prop/mainship/telecomms,
 /turf/open/floor/podhatch/floor,
 /area/bigredv2/outside/telecomm)
 "ql" = (
@@ -1000,9 +1001,7 @@
 /turf/open/floor/freezer,
 /area/bigredv2/outside/marshal_office)
 "Ai" = (
-/obj/structure/showcase{
-	icon_state = "bus"
-	},
+/obj/structure/prop/mainship/telecomms/bus,
 /turf/open/floor/podhatch/floor,
 /area/bigredv2/outside/telecomm)
 "An" = (
@@ -2516,7 +2515,7 @@ Qi
 MQ
 WZ
 kn
-uO
+pb
 uO
 pX
 Eg

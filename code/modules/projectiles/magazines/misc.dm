@@ -62,13 +62,22 @@
 
 /obj/item/ammo_magazine/packet/smart_minigun
 	name = "SG-85 ammo bin"
-	desc = "A hefty container stuffed to the absolute brim with 1000 rounds for the SG-85 powerpack."
+	desc = "A hefty container stuffed to the absolute brim with 500 rounds for the SG-85 powerpack."
 	icon_state = "box_smartminigun"
 	default_ammo = /datum/ammo/bullet/smart_minigun
 	caliber = CALIBER_10x26_CASELESS
 	current_rounds = 500
 	max_rounds = 500
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/ammo_magazine/packet/scout_rifle
+	name = "Box of A19 high velocity bullets"
+	desc = "A box containing 150 rounds of A19 overpressuered high velocity."
+	icon_state = "box_tx8"
+	default_ammo = /datum/ammo/bullet/rifle/tx8
+	caliber = CALIBER_10X28_CASELESS
+	current_rounds = 150
+	max_rounds = 150
 
 // pistol packets
 
@@ -142,7 +151,7 @@
 	name = "packet of .45-70"
 	desc = "A packet containing 50 rounds of .45-70 Government."
 	caliber = CALIBER_4570
-	icon_state = "box_44rim_mag"
+	icon_state = "box_4570rim_mag"
 	default_ammo = /datum/ammo/bullet/rifle/repeater
 	w_class = WEIGHT_CLASS_SMALL
 	current_rounds = 50

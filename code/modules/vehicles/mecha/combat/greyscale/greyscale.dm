@@ -1,11 +1,32 @@
+/particles/mecha_smoke
+	icon = 'icons/effects/particles/smoke.dmi'
+	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 2)
+	width = 100
+	height = 200
+	count = 1000
+	spawning = 3
+	lifespan = 1.5 SECONDS
+	fade = 1 SECONDS
+	velocity = list(0, 0.3, 0)
+	position = list(5, 32, 0)
+	drift = generator(GEN_SPHERE, 0, 1, NORMAL_RAND)
+	friction = 0.2
+	gravity = list(0, 0.95)
+	grow = 0.05
+
+
 /obj/vehicle/sealed/mecha/combat/greyscale
 	name = "Should not be visible"
 	icon_state = "greyscale"
 	layer = ABOVE_ALL_MOB_LAYER
 	mech_type = EXOSUIT_MODULE_GREYSCALE
 	pixel_x = -16
-	move_delay = 3 // tivi todo: polish, mechs too fast
+	soft_armor = list(MELEE = 0, BULLET = 0, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	move_delay = 3
 	max_equip_by_category = MECH_GREYSCALE_MAX_EQUIP
+	internal_damage_threshold = 15
+	internal_damage_probability = 5
+	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_SHORT_CIRCUIT
 	/// keyed list. values are types at init, otherwise instances of mecha limbs, order is layer order as well
 	var/list/datum/mech_limb/limbs = list(
 		MECH_GREY_TORSO = null,
@@ -14,9 +35,18 @@
 		MECH_GREY_R_ARM = null,
 		MECH_GREY_L_ARM = null,
 	)
+	///left particle smoke holder
+	var/obj/effect/abstract/particle_holder/holder_left
+	///right particle smoke holder
+	var/obj/effect/abstract/particle_holder/holder_right
 
 /obj/vehicle/sealed/mecha/combat/greyscale/Initialize(mapload)
 	. = ..()
+	holder_left = new(src, /particles/mecha_smoke)
+	holder_left.layer = layer+0.001
+	holder_right = new(src, /particles/mecha_smoke)
+	holder_right.layer = layer+0.001
+
 	for(var/key in limbs)
 		if(!limbs[key])
 			continue
@@ -24,10 +54,6 @@
 		limbs[key] = null
 		var/datum/mech_limb/limb = new new_limb_type
 		limb.attach(src, key)
-	// TIVI TODO HELLO ADMINS
-	if(length(GLOB.clients) > 1)
-		message_admins("Stop trying to spawn mechs before they're ready")
-		return INITIALIZE_HINT_QDEL
 
 /obj/vehicle/sealed/mecha/combat/greyscale/Destroy()
 	for(var/key in limbs)
@@ -41,6 +67,36 @@
 		balloon_alert(M, "You don't know how to pilot this")
 		return FALSE
 	return ..()
+
+/obj/vehicle/sealed/mecha/combat/greyscale/update_icon()
+	. = ..()
+	var/broken_percent = obj_integrity/max_integrity
+	var/inverted_percent = 1-broken_percent
+	holder_left.particles.spawning = 3 * inverted_percent
+	switch(broken_percent)
+		if(-INFINITY to 0.25)
+			holder_left.particles.icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 2)
+		if(0.25 to 0.5)
+			holder_left.particles.icon_state = list("smoke_1" = inverted_percent, "smoke_2" = inverted_percent, "smoke_3" = inverted_percent, "steam_1" = broken_percent, "steam_2" = broken_percent, "steam_3" = broken_percent)
+		if(0.5 to 0.75)
+			holder_left.particles.icon_state = list("steam_1" = 1, "steam_2" = 1, "steam_3" = 2)
+		else
+			holder_left.particles.spawning = 0
+	holder_right.particles.icon_state = holder_left.particles.icon_state
+	holder_right.particles.spawning = holder_left.particles.spawning
+	//end of shared code
+	if(dir & WEST)
+		holder_left.particles.position = list(30, 32, 0)
+		holder_right.particles.position = list(30, 37, 0)
+		holder_left.layer = layer+0.002
+	else if(dir & EAST)
+		holder_left.particles.position = list(5, 32, 0)
+		holder_right.particles.position = list(5, 37, 0)
+		holder_left.layer = layer+0.001
+	else
+		holder_left.particles.position = list(5, 32, 0)
+		holder_right.particles.position = list(30, 32, 0)
+		holder_left.layer = layer+0.001
 
 /obj/vehicle/sealed/mecha/combat/greyscale/update_overlays()
 	. = ..()
@@ -56,12 +112,12 @@
 
 	for(var/key in render_order)
 		if(key == MECHA_R_ARM)
-			var/obj/item/mecha_parts/mecha_equipment/weapon/right_gun = equip_by_category[MECHA_R_ARM]
+			var/obj/item/mecha_parts/mecha_equipment/right_gun = equip_by_category[MECHA_R_ARM]
 			if(right_gun)
 				. += image('icons/mecha/mech_gun_overlays.dmi', right_gun.icon_state + "_right", pixel_x=-32)
 			continue
 		if(key == MECHA_L_ARM)
-			var/obj/item/mecha_parts/mecha_equipment/weapon/left_gun = equip_by_category[MECHA_L_ARM]
+			var/obj/item/mecha_parts/mecha_equipment/left_gun = equip_by_category[MECHA_L_ARM]
 			if(left_gun)
 				. += image('icons/mecha/mech_gun_overlays.dmi', left_gun.icon_state + "_left", pixel_x=-32)
 			continue

@@ -182,6 +182,18 @@
 	resistance_flags = UNACIDABLE
 	layer = ABOVE_TURF_LAYER
 
+/obj/structure/prop/mainship/name_stencil/T
+	icon_state = "TGMC1"
+
+/obj/structure/prop/mainship/name_stencil/G
+	icon_state = "TGMC2"
+
+/obj/structure/prop/mainship/name_stencil/M
+	icon_state = "TGMC3"
+
+/obj/structure/prop/mainship/name_stencil/C
+	icon_state = "TGMC4"
+
 /obj/structure/prop/mainship/name_stencil/Initialize()
 	. = ..()
 	name = SSmapping.configs[SHIP_MAP].map_name
@@ -305,14 +317,47 @@
 	icon_state = "secure_wide_right_locked"
 
 /obj/structure/prop/mainship/telecomms
-	name = "\improper Command Airlock"
+	name = "subspace broadcaster"
+	desc = "A mighty piece of hardware used to broadcast processed subspace signals."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "broadcaster_send"
 
+/obj/structure/prop/mainship/telecomms/hub
+	name = "subspace broadcaster"
+	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "hub"
+
+/obj/structure/prop/mainship/telecomms/processor
+	name = "processor unit"
+	desc = "This machine is used to process large quantities of information."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "processor"
+
 /obj/structure/prop/mainship/telecomms/bus
-	name = "\improper Command Airlock"
-	icon = 'icons/obj/stationobjs.dmi'
+	name = "bus mainframe"
+	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
+	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "bus"
+
+/obj/structure/prop/mainship/telecomms/broadcaster
+	name = "subspace broadcaster"
+	desc = "This machine has a dish-like shape and green lights. It is designed to detect and process subspace radio activity."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "broadcaster"
+
+/obj/structure/prop/mainship/telecomms/receiver
+	name = "subspace receiver"
+	desc = "A dish-shaped machine used to broadcast processed subspace signals."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "broadcast receiver"
+
+/obj/structure/prop/mainship/telecomms/relay
+	name = "telecomms relay"
+	desc = "A mighty piece of hardware used to send massive amounts of data far away."
+	icon = 'icons/obj/machines/telecomms.dmi'
+	icon_state = "relay"
+
 
 /obj/structure/prop/mainship/suit_storage_prop
 	name = "Suit Storage Unit"
@@ -1116,6 +1161,15 @@
 	bound_width = 128
 	resistance_flags = RESIST_ALL
 	layer = ABOVE_MOB_LAYER
+
+/obj/structure/prop/vehicle/apc/Initialize()
+	. = ..()
+	if(dir == EAST || dir == WEST)
+		bound_height = 64
+		pixel_y = -20
+	else
+		bound_width = 64
+		pixel_x = -34
 
 /obj/structure/prop/vehicle/apc/med
 	icon_state = "apc_base_med"

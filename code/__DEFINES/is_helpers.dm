@@ -6,6 +6,12 @@
 
 #define isclient(A) (istype(A, /client))
 
+#define isdatum(thing) (istype(thing, /datum))
+
+#define isweakref(D) (istype(D, /datum/weakref))
+
+#define isgenerator(A) (istype(A, /generator))
+
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
@@ -98,7 +104,7 @@
 #define isxenolarva(A) (istype(A, /mob/living/carbon/xenomorph/larva))
 #define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/queen))
 #define isxenoshrike(A) (istype(A, /mob/living/carbon/xenomorph/shrike))
-#define isxenodefiler(A) (istype(A, /mob/living/carbon/xenomorph/Defiler))
+#define isxenodefiler(A) (istype(A, /mob/living/carbon/xenomorph/defiler))
 #define isxenobull(A) (istype(A, /mob/living/carbon/xenomorph/bull))
 #define isxenohivemind(A) (istype(A, /mob/living/carbon/xenomorph/hivemind))
 #define isxenowraith(A) (istype(A, /mob/living/carbon/xenomorph/wraith))
@@ -255,6 +261,7 @@
 #define iscrashgamemode(O) (istype(O, /datum/game_mode/infestation/crash))
 #define isinfestationgamemode(O) (istype(O, /datum/game_mode/infestation))
 #define iscombatpatrolgamemode(O) (istype(O, /datum/game_mode/combat_patrol))
+#define issensorcapturegamemode(O) (istype(O, /datum/game_mode/combat_patrol/sensor_capture))
 
 #define isxenoresearcharea(A) (istype(A, /area/mainship/medical/medical_science))
 
