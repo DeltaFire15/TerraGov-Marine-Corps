@@ -71,7 +71,6 @@
 	icon_state = "platform_deco"
 	anchored = TRUE
 	density = FALSE
-	throwpass = TRUE
 	layer = 3.5
 	flags_atom = ON_BORDER
 	resistance_flags = UNACIDABLE
@@ -115,6 +114,13 @@
 
 /obj/structure/platform_decoration/platform2_deco
 	icon_state = "platform2_deco"
+
+/obj/structure/platform/trench
+	icon_state = "platformtrench"
+	name = "trench wall"
+	desc = "A group of roughly cut planks forming the side of a dug in trench."
+	obj_integrity = 400
+	max_integrity = 400
 
 /obj/structure/fakeplatform
 	name = "platform"

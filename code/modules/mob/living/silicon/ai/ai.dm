@@ -6,6 +6,7 @@
 	real_name = "ARES v3.2"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai"
+	bubble_icon = "robot"
 	anchored = TRUE
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
@@ -286,7 +287,7 @@
 	show_message(rendered, 2)
 
 
-/mob/living/silicon/ai/reset_perspective(atom/A, has_static = TRUE)
+/mob/living/silicon/ai/reset_perspective(atom/new_eye, has_static = TRUE)
 	if(has_static)
 		sight = initial(sight)
 		eyeobj?.use_static = initial(eyeobj?.use_static)
@@ -297,14 +298,14 @@
 		GLOB.cameranet.visibility(eyeobj, client, all_eyes, FALSE)
 	if(camera_light_on)
 		light_cameras()
-	if(istype(A, /obj/machinery/camera))
-		current = A
+	if(istype(new_eye, /obj/machinery/camera))
+		current = new_eye
 	if(client)
-		if(ismovableatom(A))
-			if(A != GLOB.ai_camera_room_landmark)
+		if(ismovableatom(new_eye))
+			if(new_eye != GLOB.ai_camera_room_landmark)
 				end_multicam()
 			client.perspective = EYE_PERSPECTIVE
-			client.eye = A
+			client.eye = new_eye
 		else
 			end_multicam()
 			if(isturf(loc))

@@ -6,7 +6,7 @@
 	anchored = TRUE
 	max_integrity = 250
 	resistance_flags = XENO_DAMAGEABLE
-	throwpass = TRUE
+	flags_pass = PASSABLE
 	coverage = 60
 	///list of human mobs we're currently affecting in our area.
 	var/list/mob/living/carbon/human/affecting_list
@@ -119,7 +119,7 @@
 
 /obj/item/storage/backpack/dispenser/Initialize(mapload, ...)
 	. = ..()
-	AddElement(/datum/element/deployable_item, /obj/machinery/deployable/dispenser, /obj/item/storage/backpack/dispenser, 0, 0)
+	AddElement(/datum/element/deployable_item, /obj/machinery/deployable/dispenser, 0, 0)
 
 /obj/item/storage/backpack/dispenser/attack_hand(mob/living/user)
 	if(!CHECK_BITFIELD(flags_item, IS_DEPLOYED))

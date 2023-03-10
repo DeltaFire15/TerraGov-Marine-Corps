@@ -4,7 +4,6 @@
 	icon = 'icons/obj/structures/fence.dmi'
 	icon_state = "fence0"
 	density = TRUE
-	throwpass = TRUE //So people and xenos can shoot through!
 	anchored = TRUE //We can not be moved.
 	coverage = 5
 	layer = WINDOW_LAYER
@@ -30,10 +29,10 @@
 	. = ..()
 
 	if(istype(I, /obj/item/stack/rods) && obj_integrity < max_integrity)
-		if(user.skills.getRating("construction") < SKILL_CONSTRUCTION_PLASTEEL)
+		if(user.skills.getRating(SKILL_CONSTRUCTION) < SKILL_CONSTRUCTION_PLASTEEL)
 			user.visible_message(span_notice("[user] fumbles around figuring out how to fix [src]'s wiring."),
 			span_notice("You fumble around figuring out how to fix [src]'s wiring."))
-			var/fumbling_time = 10 SECONDS - 2 SECONDS * user.skills.getRating("construction")
+			var/fumbling_time = 10 SECONDS - 2 SECONDS * user.skills.getRating(SKILL_CONSTRUCTION)
 			if(!do_after(user, fumbling_time, TRUE, src, BUSY_ICON_UNSKILLED))
 				return
 

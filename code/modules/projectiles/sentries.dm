@@ -313,15 +313,6 @@
 	sentry_alert(SENTRY_ALERT_DAMAGE)
 	update_icon()
 
-/obj/machinery/deployable/mounted/sentry/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			take_damage(rand(90, 150))
-		if(EXPLODE_HEAVY)
-			take_damage(rand(50, 150))
-		if(EXPLODE_LIGHT)
-			take_damage(rand(30, 100))
-
 //----------------------------------------------------------------------------
 // Sentry Functions
 
@@ -437,15 +428,15 @@
 		if(smoke && smoke.opacity)
 			return FALSE
 
-		if(IS_OPAQUE_TURF(T) || T.density && T.throwpass == FALSE && !(T.type in ignored_terrains))
+		if(IS_OPAQUE_TURF(T) || T.density && !(T.flags_pass & PASSPROJECTILE) && !(T.type in ignored_terrains))
 			return FALSE
 
 		for(var/obj/machinery/MA in T)
-			if(MA.density && MA.throwpass == FALSE && !(MA.type in ignored_terrains))
+			if(MA.density && !(MA.flags_pass & PASSPROJECTILE) && !(MA.type in ignored_terrains))
 				return FALSE
 
 		for(var/obj/structure/S in T)
-			if(S.density && S.throwpass == FALSE && !(S.type in ignored_terrains))
+			if(S.density && !(S.flags_pass & PASSPROJECTILE) && !(S.type in ignored_terrains))
 				return FALSE
 
 	return TRUE

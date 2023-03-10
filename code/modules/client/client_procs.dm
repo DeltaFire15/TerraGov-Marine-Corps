@@ -391,8 +391,7 @@
 	seen_messages = null
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
-		movingmob.client_mobs_in_contents -= mob
-		UNSETEMPTY(movingmob.client_mobs_in_contents)
+		LAZYREMOVE(movingmob.client_mobs_in_contents, mob)
 		movingmob = null
 	SSping.currentrun -= src
 	QDEL_NULL(tooltips)
@@ -827,10 +826,10 @@
 					var/looc = tgui_say_create_open_command(LOOC_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[looc]")
 				if(MOOC_CHANNEL)
-					var/mooc = tgui_say_create_open_command(LOOC_CHANNEL)
+					var/mooc = tgui_say_create_open_command(MOOC_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[mooc]")
 				if(XOOC_CHANNEL)
-					var/xooc = tgui_say_create_open_command(LOOC_CHANNEL)
+					var/xooc = tgui_say_create_open_command(XOOC_CHANNEL)
 					winset(src, "default-[REF(key)]", "parent=default;name=[key];command=[xooc]")
 
 

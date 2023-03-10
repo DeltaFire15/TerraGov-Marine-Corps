@@ -7,7 +7,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_atom = CONDUCT
 	flags_equip_slot = ITEM_SLOT_BELT
-	materials = list(/datum/material/metal = 50, /datum/material/glass = 20)
 	actions_types = list(/datum/action/item_action)
 	light_range = 5
 	light_power = 3 //luminosity when on
@@ -185,7 +184,7 @@
 /obj/item/flashlight/flare
 	name = "flare"
 	desc = "A NT standard emergency flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	light_power = 6 //As bright as a flashlight, but more disposable. Doesn't burn forever though
 	icon_state = "flare"
 	item_state = "flare"

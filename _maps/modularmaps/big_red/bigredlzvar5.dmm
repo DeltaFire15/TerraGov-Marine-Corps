@@ -16,7 +16,7 @@
 	},
 /area/bigredv2/outside/space_port)
 "an" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
 	dir = 1
 	},
 /area/bigredv2/outside/nw)
@@ -145,7 +145,7 @@
 /turf/open/floor/plating/ground/mars/random/sand,
 /area/bigredv2/outside/nw)
 "dt" = (
-/obj/machinery/botany,
+/obj/machinery/portable_atmospherics/hydroponics,
 /turf/open/floor/tile/green/whitegreen{
 	dir = 1
 	},
@@ -537,7 +537,7 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 2
 	},
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
 	dir = 10
 	},
 /area/bigredv2/outside/nw)
@@ -558,7 +558,7 @@
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/telecomm)
 "nl" = (
-/obj/effect/decal/sandedge{
+/obj/effect/turf_decal/sandedge{
 	dir = 1
 	},
 /turf/closed/wall/r_wall,
@@ -579,14 +579,14 @@
 /turf/open/floor/marking/delivery,
 /area/bigredv2/outside/marshal_office)
 "nD" = (
-/obj/effect/decal/warning_stripes/linethick{
+/obj/effect/turf_decal/warning_stripes/linethick{
 	dir = 8
 	},
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/telecomm)
 "nJ" = (
 /obj/effect/landmark/weed_node,
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
 	dir = 5
 	},
 /area/bigredv2/outside/nw)
@@ -946,7 +946,7 @@
 /obj/machinery/door/poddoor/timed_late/containment/landing_zone{
 	dir = 2
 	},
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
 	dir = 4
 	},
 /area/bigredv2/outside/nw)
@@ -1054,7 +1054,7 @@
 /area/bigredv2/outside/marshal_office)
 "Ay" = (
 /obj/structure/window/reinforced,
-/obj/machinery/botany,
+/obj/machinery/portable_atmospherics/hydroponics,
 /turf/open/floor/tile/white,
 /area/bigredv2/outside/marshal_office)
 "AI" = (
@@ -1109,7 +1109,7 @@
 /turf/open/floor/marking/asteroidwarning,
 /area/bigredv2/outside/space_port)
 "Cz" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
 	dir = 9
 	},
 /area/bigredv2/outside/nw)
@@ -1544,7 +1544,7 @@
 /turf/open/floor/plating/warning,
 /area/bigredv2/outside/space_port)
 "Oc" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
 	dir = 10
 	},
 /area/bigredv2/outside/nw)
@@ -1709,7 +1709,7 @@
 /turf/open/floor/tile/dark,
 /area/bigredv2/outside/telecomm)
 "RH" = (
-/obj/machinery/botany,
+/obj/machinery/portable_atmospherics/hydroponics,
 /obj/effect/landmark/weed_node,
 /turf/open/floor/tile/green/whitegreen{
 	dir = 1
@@ -1860,7 +1860,7 @@
 	},
 /area/bigredv2/outside/marshal_office)
 "VM" = (
-/turf/open/floor/plating/ground/mars/dirttosand{
+/turf/open/floor/plating/ground/mars/dirttosand/autosmooth{
 	dir = 4
 	},
 /area/bigredv2/outside/nw)

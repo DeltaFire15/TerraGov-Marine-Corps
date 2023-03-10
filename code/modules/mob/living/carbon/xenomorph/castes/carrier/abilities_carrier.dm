@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 /datum/action/xeno_action/activable/throw_hugger
 	name = "Use/Throw Facehugger"
 	action_icon_state = "throw_hugger"
-	mechanics_text = "Click on a non tile and non mob to bring a facehugger into your hand. Click at a target or tile to throw a facehugger."
+	desc = "Click on a non tile and non mob to bring a facehugger into your hand. Click at a target or tile to throw a facehugger."
 	ability_name = "throw facehugger"
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_THROW_HUGGER,
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 /datum/action/xeno_action/place_trap
 	name = "Place trap"
 	action_icon_state = "place_trap"
-	mechanics_text = "Place a hole on weeds that can be filled with a hugger or acid. Activates when a marine steps on it."
+	desc = "Place a hole on weeds that can be filled with a hugger or acid. Activates when a marine steps on it."
 	plasma_cost = 400
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_PLACE_TRAP,
@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 /datum/action/xeno_action/spawn_hugger
 	name = "Spawn Facehugger"
 	action_icon_state = "spawn_hugger"
-	mechanics_text = "Spawn a facehugger that is stored on your body."
+	desc = "Spawn a facehugger that is stored on your body."
 	plasma_cost = 200
 	cooldown_timer = 10 SECONDS
 	keybinding_signals = list(
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 /datum/action/xeno_action/carrier_panic
 	name = "Drop All Facehuggers"
 	action_icon_state = "carrier_panic"
-	mechanics_text = "Drop all stored huggers in a fit of panic. Uses all remaining plasma!"
+	desc = "Drop all stored huggers in a fit of panic. Uses all remaining plasma!"
 	plasma_cost = 10
 	cooldown_timer = 50 SECONDS
 	keybinding_signals = list(
@@ -215,7 +215,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 	if(!.)
 		return FALSE
 	var/mob/living/carbon/xenomorph/carrier/caster = owner
-	if(caster.health > (caster.maxHealth * 0.25))
+	if(caster.health > (caster.maxHealth * 0.56))
 		if(!silent)
 			to_chat(caster, span_xenowarning("We are not injured enough to panic yet!"))
 		return FALSE
@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 
 	xeno_carrier.visible_message(span_xenowarning("A chittering mass of tiny aliens is trying to escape [xeno_carrier]!"))
 	while(xeno_carrier.huggers > 0)
-		var/obj/item/clothing/mask/facehugger/new_hugger = new xeno_carrier.selected_hugger_type(get_turf(xeno_carrier))
+		var/obj/item/clothing/mask/facehugger/new_hugger = new /obj/item/clothing/mask/facehugger/larval(get_turf(xeno_carrier))
 		step_away(new_hugger, xeno_carrier, 1)
 		addtimer(CALLBACK(new_hugger, /obj/item/clothing/mask/facehugger.proc/go_active, TRUE), new_hugger.jump_cooldown)
 		xeno_carrier.huggers--
@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 /datum/action/xeno_action/choose_hugger_type
 	name = "Choose Hugger Type"
 	action_icon_state = "facehugger"
-	mechanics_text = "Selects which hugger type you will build with the Spawn Hugger ability."
+	desc = "Selects which hugger type you will build with the Spawn Hugger ability."
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_CHOOSE_HUGGER,
 		KEYBINDING_ALTERNATE = COMSIG_XENOABILITY_SWITCH_HUGGER,
@@ -295,7 +295,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 /datum/action/xeno_action/build_hugger_turret
 	name = "build hugger turret"
 	action_icon_state = "hugger_turret"
-	mechanics_text = "Build a hugger turret"
+	desc = "Build a hugger turret"
 	plasma_cost = 800
 	cooldown_timer = 5 MINUTES
 
@@ -346,7 +346,7 @@ GLOBAL_LIST_INIT(hugger_images_list,  list(
 /datum/action/xeno_action/activable/call_younger
 	name = "Call of Younger"
 	action_icon_state = "call_younger"
-	mechanics_text = "Appeals to the larva inside the Marine. The Marine loses his balance, and larva's progress accelerates."
+	desc = "Appeals to the larva inside the Marine. The Marine loses his balance, and larva's progress accelerates."
 	ability_name = "call younger"
 	plasma_cost = 150
 	cooldown_timer = 20 SECONDS

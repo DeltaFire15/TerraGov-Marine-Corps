@@ -6,7 +6,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	blood_sprite_state = "helmetblood"
 	attachments_by_slot = list(ATTACHMENT_SLOT_BADGE)
-	attachments_allowed = list(/obj/item/armor_module/armor/badge)
+	attachments_allowed = list(/obj/item/armor_module/greyscale/badge)
 	var/anti_hug = 0
 
 /obj/item/clothing/head/update_clothing_icon()
@@ -148,6 +148,16 @@
 	icon_state = "booniehat"
 	item_state = "booniehat"
 	soft_armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 10, BIO = 5, FIRE = 5, ACID = 5)
+
+/obj/item/clothing/head/ornamented_cap
+	name = "\improper ornamented cap"
+	desc = "An ornamented cap with a visor. This one seems to be torn at the back."
+	icon_state = "ornamented_cap"
+	icon = 'icons/obj/clothing/cm_hats.dmi'
+	item_icons = list(
+		slot_head_str = 'icons/mob/head_1.dmi',)
+	soft_armor = list(MELEE = 15, BULLET = 15, LASER = 15, ENERGY = 15, BOMB = 10, BIO = 5, FIRE = 5, ACID = 5)
+	flags_armor_features = ARMOR_NO_DECAP
 
 /obj/item/clothing/head/slouch
 	name = "\improper TGMC slouch hat"

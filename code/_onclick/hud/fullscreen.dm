@@ -75,7 +75,7 @@
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/severity = 0
 	var/fs_view = WORLD_VIEW
 	var/show_when_dead = FALSE
@@ -140,7 +140,6 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 	layer = FULLSCREEN_DRUGGY_LAYER
-
 
 /atom/movable/screen/fullscreen/pain
 	icon_state = "painoverlay"

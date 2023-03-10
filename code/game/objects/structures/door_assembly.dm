@@ -6,10 +6,10 @@
 	anchored = FALSE
 	density = TRUE
 	resistance_flags = XENO_DAMAGEABLE
-	throwpass = FALSE
+	flags_pass = PASSAIR
 	max_integrity = 50
 	var/state = 0
-	var/base_icon_state = ""
+	base_icon_state = ""
 	var/base_name = "Airlock"
 	var/obj/item/circuitboard/airlock/electronics = null
 	var/airlock_type = "" //the type path of the airlock once completed

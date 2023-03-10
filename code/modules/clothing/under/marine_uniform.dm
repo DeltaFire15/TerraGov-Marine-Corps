@@ -10,10 +10,8 @@
 	adjustment_variants = list(
 		"Down" = "_d",
 		"Half" = "_h",
+		"Rolled" = "_r",
 	)
-
-/obj/item/clothing/under/marine/standard
-	flags_item_map_variant = null
 
 /obj/item/clothing/under/marine/black_vest
 	starting_attachments = list(/obj/item/armor_module/storage/uniform/black_vest)
@@ -23,9 +21,6 @@
 /obj/item/clothing/under/marine/camo
 	name = "\improper TGMC camo fatigues (jungle)"
 	icon_state = "m_marine_jumpsuit"
-	adjustment_variants = list(
-		"Down" = "_d",
-	)
 
 /obj/item/clothing/under/marine/camo/snow
 	name = "\improper TGMC camo fatigues (snow)"
@@ -107,6 +102,18 @@
 		"Down" = "_d",
 	)
 
+/obj/item/clothing/under/marine/striped
+	name = "\improper Striped fatigues"
+	desc = "A simple set of camo pants and a striped shirt."
+	icon_state = "marine_striped"
+	item_state = "marine_striped"
+	adjustment_variants = list()
+/obj/item/clothing/under/marine/black_suit
+	name = "\improper marine black suit"
+	desc = "A easy fitting black suit, somehow exactly your size."
+	icon_state = "marine_suit"
+	item_state = "marine_suit"
+	adjustment_variants = list()
 /obj/item/clothing/under/marine/officer
 	name = "marine officer uniform"
 	desc = "A kevlar-weaved, hazmat-tested, EMF-augmented, yet extra-soft and extra-light officer uniform. You suspect it's not as extra-fancy as advertised."
@@ -247,18 +254,26 @@
 	item_state = "commissar_uniform"
 	soft_armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, FIRE = 10, ACID = 10)
 
-/obj/item/clothing/under/marine/veteran/PMC
+/obj/item/clothing/under/marine/veteran/pmc
 	name = "\improper PMC fatigues"
 	desc = "A white set of fatigues, designed for private security operators. The symbol of the Nanotrasen corporation is emblazed on the suit."
 	icon_state = "pmc_jumpsuit"
 	min_cold_protection_temperature = ICE_PLANET_MIN_COLD_PROTECTION_TEMPERATURE
 
-/obj/item/clothing/under/marine/veteran/PMC/leader
+/obj/item/clothing/under/marine/veteran/pmc/holster
+	starting_attachments = list(/obj/item/armor_module/storage/uniform/holster)
+
+/obj/item/clothing/under/marine/veteran/pmc/webbing
+	starting_attachments = list(/obj/item/armor_module/storage/uniform/black_vest)
+/obj/item/clothing/under/marine/veteran/pmc/leader
 	name = "\improper PMC command fatigues"
 	desc = "A white set of fatigues, designed for private security operators. The symbol of the Nanotrasen corporation is emblazed on the suit. This particular suit looks like it belongs to a high-ranking officer."
 	icon_state = "officer_jumpsuit"
 
-/obj/item/clothing/under/marine/veteran/PMC/commando
+/obj/item/clothing/under/marine/veteran/pmc/leader/holster
+	starting_attachments = list(/obj/item/armor_module/storage/uniform/holster)
+
+/obj/item/clothing/under/marine/veteran/pmc/commando
 	name = "\improper PMC commando uniform"
 	desc = "An armored uniform worn by Nanotrasen elite commandos. It is well protected while remaining light and comfortable."
 	icon_state = "commando_jumpsuit"
@@ -441,6 +456,16 @@
 	item_state = "som_uniform_leader"
 
 /obj/item/clothing/under/som/leader/webbing
+	starting_attachments = list(/obj/item/armor_module/storage/uniform/brown_vest)
+
+/obj/item/clothing/under/icc
+	name = "\improper Modelle/30 uniform"
+	desc = "The standard uniform of ICC military personnel. The design is clearly dual purpose, meant to be both a combat uniform and one fit for daily tasks abord ships."
+	icon_state = "icc"
+	item_state = "icc"
+	has_sensor = FALSE
+
+/obj/item/clothing/under/icc/webbing
 	starting_attachments = list(/obj/item/armor_module/storage/uniform/brown_vest)
 
 /obj/item/clothing/under/sectoid

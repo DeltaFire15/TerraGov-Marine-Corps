@@ -15,7 +15,7 @@
 /datum/action/xeno_action/ready_charge
 	name = "Toggle Charging"
 	action_icon_state = "ready_charge"
-	mechanics_text = "Toggles the movement-based charge on and off."
+	desc = "Toggles the movement-based charge on and off."
 	keybinding_signals = list(
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_TOGGLE_CHARGE,
 	)
@@ -216,7 +216,7 @@
 						continue
 					charger.visible_message(span_danger("[charger] runs [victim] over!"),
 						span_danger("We run [victim] over!"), null, 5)
-					victim.take_overall_damage(CHARGE_SPEED(src) * 10, BRUTE,MELEE)
+					victim.take_overall_damage(CHARGE_SPEED(src) * 10, BRUTE,MELEE, max_limbs = 3)
 					animation_flash_color(victim)
 			if(CHARGE_BULL, CHARGE_BULL_HEADBUTT, CHARGE_BULL_GORE) //Xeno Bull
 				if(MODULUS(valid_steps_taken, 4) == 0)
@@ -411,7 +411,7 @@
 	return (CHARGE_SPEED(charge_datum) * 10)
 
 /obj/vehicle/sealed/mecha/pre_crush_act(mob/living/carbon/xenomorph/charger, datum/action/xeno_action/ready_charge/charge_datum)
-	return (CHARGE_SPEED(charge_datum) * 240)
+	return (CHARGE_SPEED(charge_datum) * 375)
 
 /obj/structure/razorwire/pre_crush_act(mob/living/carbon/xenomorph/charger, datum/action/xeno_action/ready_charge/charge_datum)
 	if(CHECK_BITFIELD(resistance_flags, INDESTRUCTIBLE) || charger.is_charging < CHARGE_ON)

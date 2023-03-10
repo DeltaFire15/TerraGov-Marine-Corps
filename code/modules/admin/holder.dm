@@ -378,6 +378,7 @@ GLOBAL_PROTECT(admin_verbs_varedit)
 	/datum/admins/proc/set_view_range,
 	/datum/admins/proc/emp,
 	/datum/admins/proc/queen_report,
+	/datum/admins/proc/rouny_all,
 	/datum/admins/proc/hive_status,
 	/datum/admins/proc/ai_report,
 	/datum/admins/proc/command_report,
@@ -551,7 +552,7 @@ GLOBAL_PROTECT(admin_verbs_log)
 		return FALSE
 	if(!C?.holder?.rank?.rights)
 		return FALSE
-	if(check_other_rights(C, R_ADMINTICKET, FALSE))
+	if(check_other_rights(C, R_ADMIN, FALSE))
 		return FALSE
 	if(!check_other_rights(C, R_MENTOR, FALSE))
 		return FALSE
