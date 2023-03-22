@@ -103,6 +103,7 @@ GLOBAL_LIST_INIT(medic_gear_listed_products, list(
 		/obj/item/reagent_containers/hypospray/advanced = list(CAT_MEDSUP, "Hypospray", 2, "orange"),
 		/obj/item/reagent_containers/hypospray/advanced/big = list(CAT_MEDSUP, "Big hypospray", 10, "orange"),
 		/obj/item/clothing/glasses/hud/health = list(CAT_MEDSUP, "Medical HUD glasses", 2, "black"),
+		/obj/item/healthanalyzer/gloves = list(CAT_MEDSUP, "Health scanner gloves", 2, "black"),
 		/obj/item/defibrillator/gloves = list(CAT_MEDSUP, "Advanced medical gloves", 5, "black"),
 	))
 
@@ -581,7 +582,7 @@ GLOBAL_LIST_INIT(synthetic_clothes_listed_products, list(
 		/obj/item/clothing/suit/wcoat = list(CAT_SMR, "Waistcoat", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/wizrobe/gentlecoat = list(CAT_SMR, "Gentleman's Coat", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/bomber = list(CAT_SMR, "Bomber Jacket", 0, "synth-cosmetic"),
-		/obj/item/clothing/suit/security/navyhos = list(CAT_SMR, "Navy HoS Jacket", 0, "synth-cosmetic"),
+		/obj/item/clothing/suit/security/formal/senior_officer = list(CAT_SMR, "Navy HoS Jacket", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/chef/classic = list(CAT_SMR, "Classic Chef vest", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/ianshirt = list(CAT_SMR, "Ian Shirt", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/suspenders = list(CAT_SMR, "Suspenders", 0, "synth-cosmetic"),
