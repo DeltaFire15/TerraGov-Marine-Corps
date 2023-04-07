@@ -131,13 +131,6 @@ OPERATIONS
 	containertype = /obj/structure/closet/crate/secure/explosives
 	available_against_xeno_only = TRUE
 
-/datum/supply_packs/operations/cas_voucher
-	name = "150 dropship fabricator points"
-	contains = list(/obj/item/dropship_points_voucher)
-	cost = 400
-	containertype = null
-	available_against_xeno_only = TRUE
-
 /datum/supply_packs/operations/cash
 	name = "200 dollars"
 	contains = list(/obj/item/spacecash/c500)
@@ -365,17 +358,17 @@ WEAPONS
 /datum/supply_packs/weapons/railgun_ammo
 	name = "SR-220 Railgun armor piercing discarding sabot round"
 	contains = list(/obj/item/ammo_magazine/railgun)
-	cost = 20
+	cost = 50
 
 /datum/supply_packs/weapons/railgun_ammo/hvap
 	name = "SR-220 Railgun high velocity armor piercing round"
 	contains = list(/obj/item/ammo_magazine/railgun/hvap)
-	cost = 20
+	cost = 50
 
 /datum/supply_packs/weapons/railgun_ammo/smart
 	name = "SR-220 Railgun smart armor piercing round"
 	contains = list(/obj/item/ammo_magazine/railgun/smart)
-	cost = 20
+	cost = 50
 
 /datum/supply_packs/weapons/tx8
 	name = "BR-8 Scout Rifle"
@@ -914,7 +907,7 @@ ARMOR
 	cost = 120
 
 /datum/supply_packs/armor/modular/attachments/artemis_mark_two
-	name = "Artemis Mark 2 helmet module"
+	name = "Freyr Mark 2 helmet module"
 	contains = list(
 		/obj/item/armor_module/module/binoculars/artemis_mark_two,
 	)
@@ -955,7 +948,7 @@ CLOTHING
 /datum/supply_packs/clothing/officer_outfits
 	name = "officer outfits"
 	contains = list(
-		/obj/item/clothing/under/rank/ro_suit,
+		/obj/item/clothing/under/marine/officer/ro_suit,
 		/obj/item/clothing/under/marine/officer/bridge,
 		/obj/item/clothing/under/marine/officer/bridge,
 		/obj/item/clothing/under/marine/officer/exec,

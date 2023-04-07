@@ -4,6 +4,10 @@
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = null
 	item_state = "ammo_mag" //PLACEHOLDER. This ensures the mag doesn't use the icon state instead.
+	item_icons = list(
+		slot_l_hand_str = 'icons/mob/inhands/weapons/ammo_left.dmi',
+		slot_r_hand_str = 'icons/mob/inhands/weapons/ammo_right.dmi',
+		)
 	flags_atom = CONDUCT
 	flags_equip_slot = ITEM_SLOT_BELT
 	throwforce = 2
@@ -548,3 +552,8 @@ Turn() or Shift() as there is virtually no overhead. ~N
 	name = "Flechette Ammo Box"
 	icon_state = "ammoboxflechette"
 	ammo_type = /datum/ammo/bullet/shotgun/flechette
+	
+/obj/item/big_ammo_box/mg
+	name = "big ammo box (10x26mm)"
+	default_ammo = /datum/ammo/bullet/rifle/machinegun
+	caliber = CALIBER_10x26_CASELESS

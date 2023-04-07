@@ -1204,7 +1204,7 @@ So if we are on the 32th absolute pixel coordinate we are on tile 1, but if we a
 
 		var/list/datum/limb/parts = get_damageable_limbs()
 
-		while(parts.len)
+		while(length(parts))
 			var/datum/limb/picked = pick_n_take(parts)
 			var/weight = GLOB.organ_rel_size[picked.name]
 			armor_val += picked.soft_armor.getRating(armor_type) * weight
@@ -1359,7 +1359,7 @@ So if we are on the 32th absolute pixel coordinate we are on tile 1, but if we a
 	if(feedback_flags & BULLET_FEEDBACK_FIRE)
 		victim_feedback += "You burst into <b>flames!!</b> Stop drop and roll!"
 
-	if(!client.prefs.mute_self_combat_messages)
+	if(!client?.prefs.mute_self_combat_messages)
 		to_chat(src, span_highdanger("[victim_feedback.Join(" ")]"))
 
 	if(feedback_flags & BULLET_FEEDBACK_SCREAM && stat == CONSCIOUS && !(species.species_flags & NO_PAIN))
@@ -1396,7 +1396,7 @@ So if we are on the 32th absolute pixel coordinate we are on tile 1, but if we a
 	if(feedback_flags & BULLET_FEEDBACK_SCREAM && stat == CONSCIOUS)
 		emote(prob(70) ? "hiss" : "roar")
 
-	if(!client.prefs.mute_self_combat_messages)
+	if(!client?.prefs.mute_self_combat_messages)
 		to_chat(src, span_highdanger("[victim_feedback.Join(" ")]"))
 
 // Sundering procs
