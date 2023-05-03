@@ -50,7 +50,7 @@
 	var/atom/movable/vis_obj/effect/muzzle_flash/flash
 	COOLDOWN_DECLARE(fire_cooldown)
 
-/obj/vehicle/unmanned/Initialize()
+/obj/vehicle/unmanned/Initialize(mapload)
 	. = ..()
 	ammo = GLOB.ammo_list[ammo]
 	name += " " + num2text(serial)
@@ -76,6 +76,10 @@
 	. = ..()
 	GLOB.unmanned_vehicles -= src
 	QDEL_NULL(flash)
+
+/obj/vehicle/unmanned/obj_destruction()
+	robogibs(src)
+	return ..()
 
 /obj/vehicle/unmanned/take_damage(damage_amount, damage_type, damage_flag, effects, attack_dir, armour_penetration)
 	. = ..()

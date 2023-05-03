@@ -19,7 +19,7 @@
 	var/launched = FALSE
 	///bonus impact damage if launched from a UGL/grenade launcher
 	var/launchforce = 10
-	var/det_time =  4 SECONDS
+	var/det_time = 4 SECONDS
 	///Does it make a danger overlay for humans? Can synths use it?
 	var/dangerous = TRUE
 	var/arm_sound = 'sound/weapons/armbomb.ogg'
@@ -29,7 +29,7 @@
 	var/light_impact_range = 4
 
 
-/obj/item/explosive/grenade/Initialize()
+/obj/item/explosive/grenade/Initialize(mapload)
 	. = ..()
 	det_time = rand(det_time - 1 SECONDS, det_time + 1 SECONDS)
 
@@ -113,7 +113,7 @@
 	icon_state = "grenade_rad" //placeholder
 	item_state = "grenade_rad" //placeholder
 	icon_state_mini = "grenade_red" //placeholder
-	det_time =  40 //default
+	det_time = 40 //default
 	arm_sound = 'sound/weapons/armbomb.ogg' //placeholder
 	hud_state = "grenade_he" //placeholder
 	///The range for the grenade's full effect
@@ -143,8 +143,7 @@
 
 ///Applies the actual effects of the rad grenade
 /obj/item/explosive/grenade/rad/proc/irradiate(mob/living/victim, strength)
-	var/rad_penetration = max((100 - victim.get_soft_armor(BIO)) / 100, 0.25)
-	var/effective_strength = strength * rad_penetration //strength with rad armor taken into account
+	var/effective_strength = max(victim.modify_by_armor(strength, BIO), strength * 0.25)
 	victim.adjustCloneLoss(effective_strength)
 	victim.adjustStaminaLoss(effective_strength * 7)
 	victim.adjust_stagger(effective_strength / 2)

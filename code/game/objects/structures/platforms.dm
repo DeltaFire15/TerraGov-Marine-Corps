@@ -24,7 +24,7 @@
 	obj_integrity = 50 //ditto
 	max_integrity = 50	//ditto
 
-/obj/structure/platform/Initialize()
+/obj/structure/platform/Initialize(mapload)
 	. = ..()
 	var/image/I = image(icon, src, "platform_overlay", LADDER_LAYER, dir)//ladder layer puts us just above weeds.
 	switch(dir)
@@ -54,11 +54,11 @@
 
 /obj/structure/platform/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(mover && mover.throwing)
+	if(mover?.throwing)
 		return TRUE
 
 	var/obj/structure/S = locate(/obj/structure) in get_turf(mover)
-	if(S && S.climbable && !(S.flags_atom & ON_BORDER) && climbable && isliving(mover)) //Climbable objects allow you to universally climb over others
+	if(S?.climbable && !(S.flags_atom & ON_BORDER) && climbable && isliving(mover)) //Climbable objects allow you to universally climb over others
 		return TRUE
 
 	if(!(flags_atom & ON_BORDER) || !(get_dir(loc, target) & dir))
@@ -75,7 +75,7 @@
 	flags_atom = ON_BORDER
 	resistance_flags = UNACIDABLE
 
-/obj/structure/platform_decoration/Initialize()
+/obj/structure/platform_decoration/Initialize(mapload)
 	. = ..()
 	switch(dir)
 		if (NORTH)
@@ -136,7 +136,7 @@
 	obj_integrity = 50	//Ditto
 	max_integrity = 50	//Ditto
 
-/obj/structure/fakeplatform/Initialize()
+/obj/structure/fakeplatform/Initialize(mapload)
 	. = ..()
 	var/image/I = image(icon, src, "platform_overlay", LADDER_LAYER, dir)//ladder layer puts us just above weeds.
 	switch(dir)
