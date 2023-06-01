@@ -17,6 +17,8 @@
 	var/list/tracked_list
 	///The hive we're tracking
 	var/tracked_hivenumber = XENO_HIVE_NORMAL
+	///The list of hives we will never track
+	var/static/list/blacklisted_hivenumbers = list(XENO_HIVE_NONE, XENO_HIVE_ADMEME, XENO_HIVE_FALLEN)
 
 /obj/item/pinpointer/Initialize(mapload)
 	. = ..()
@@ -30,7 +32,7 @@
 	///The hivenumbers that we're allowed to select structures to track from
 	var/list/trackable_hivenumbers = list()
 	for(var/hivenumber in GLOB.xeno_critical_structures_by_hive)
-		if(hivenumber == XENO_HIVE_FALLEN) //no reason to ever track valhalla beans
+		if(hivenumber in blacklisted_hivenumbers) //no reason to ever track valhalla or admin beans
 			continue
 		if(!length(GLOB.xeno_critical_structures_by_hive[hivenumber])) //hives with no structures don't need tracking either
 			continue
@@ -46,14 +48,14 @@
 		tracked_list = GLOB.xeno_critical_structures_by_hive[tracked_hivenumber]
 
 	if(!length(tracked_list))
-		to_chat(user, span_warning("No traceable signals found!"))
+		balloon_alert(user, "No signal")
 		return
 	target = tgui_input_list(user, "Select the structure you wish to track.", "Pinpointer", tracked_list)
 	if(QDELETED(target))
 		return
 	var/turf/pinpointer_loc = get_turf(src)
 	if(target.z != pinpointer_loc.z)
-		to_chat(user, span_warning("Chosen target signal too weak. Choose another."))
+		balloon_alert(user, "Signal too weak")
 		target = null
 		return
 
@@ -71,7 +73,7 @@
 		return
 	active = TRUE
 	START_PROCESSING(SSobj, src)
-	to_chat(user, span_notice("You activate the pinpointer"))
+	balloon_alert(user, "Pinpointer activated")
 
 
 /obj/item/pinpointer/proc/deactivate(mob/living/user)
@@ -79,7 +81,7 @@
 	target = null
 	STOP_PROCESSING(SSobj, src)
 	icon_state = "pinoff"
-	to_chat(user, span_notice("You deactivate the pinpointer"))
+	balloon_alert(user, "Pinpointer deactivated")
 
 
 /obj/item/pinpointer/process()
