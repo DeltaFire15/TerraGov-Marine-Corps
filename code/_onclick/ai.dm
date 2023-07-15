@@ -150,6 +150,9 @@
 	if(aiControlDisabled)
 		to_chat(user, span_notice("[src] AI remote control has been disabled."))
 		return
+	if(emergency)
+		to_chat(user, span_notice("You can't lock a door that's on emergency access."))
+		return
 	if(locked)
 		bolt_raise(user)
 	else if(hasPower())
@@ -160,6 +163,20 @@
 		to_chat(user, span_notice("[src] AI remote control has been disabled."))
 		return
 	user_toggle_open(user)
+
+/obj/machinery/door/airlock/AICtrlShiftClick(mob/living/silicon/ai/user)
+	if(aiControlDisabled)
+		to_chat(user, span_notice("[src] AI remote control has been disabled."))
+		return
+	if(locked || !hasPower())
+		to_chat(user, span_notice("Emergency access mechanism inaccessible."))
+		return
+	if(emergency)
+		to_chat(user, span_notice("[src] emergency access has been disabled."))
+		emergency_off(user)
+	else
+		to_chat(user, span_notice("[src] emergency access has been enabled."))
+		emergency_on(user)
 
 /obj/machinery/door/airlock/dropship_hatch/AICtrlClick(mob/living/silicon/ai/user)
 	return
@@ -189,6 +206,53 @@
 /obj/alien/weeds/AICtrlShiftClick(mob/living/silicon/ai/user)
 	var/turf/firedturf = get_turf(src)
 	firedturf.AICtrlShiftClick(user)
+
+/* Xenos */
+/mob/living/carbon/xenomorph/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_NORMAL)
+
+/mob/living/carbon/xenomorph/shrike/AIMiddleClick(mob/living/silicon/ai/user) //xenomorph leadership castes get some reduction in ping cooldown
+	user.ai_ping(src, COOLDOWN_AI_PING_LOW)
+
+/mob/living/carbon/xenomorph/queen/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_LOW)
+
+/mob/living/carbon/xenomorph/king/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_LOW)
+
+/* Xeno structures */
+/obj/structure/xeno/silo/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_EXTRA_LOW)
+
+/obj/structure/xeno/xeno_turret/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_EXTRA_LOW)
+
+/obj/structure/xeno/evotower/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_EXTRA_LOW)
+
+/obj/structure/xeno/maturitytower/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_EXTRA_LOW)
+
+/obj/structure/xeno/pherotower/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_EXTRA_LOW)
+
+/obj/structure/xeno/spawner/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_EXTRA_LOW)
+
+/obj/structure/xeno/spawner/plant/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_LOW)
+
+/obj/structure/xeno/tunnel/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_LOW)
+
+/obj/structure/xeno/trap/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_NORMAL)
+
+/* acid */
+
+/obj/effect/xenomorph/acid/AIMiddleClick(mob/living/silicon/ai/user)
+	user.ai_ping(src, COOLDOWN_AI_PING_NORMAL)
+
 
 /* Turf */
 
