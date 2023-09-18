@@ -14,7 +14,7 @@
 	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
 		if(blood_volume > BLOOD_VOLUME_MAXIMUM) //Warning: contents under pressure.
 			var/spare_blood = blood_volume - ((BLOOD_VOLUME_MAXIMUM + BLOOD_VOLUME_NORMAL) / 2) //Knock you to the midpoint between max and normal to not spam.
-			if(drip(spare_blood))
+			if(drip(spare_blood, TRUE))
 				var/bleed_range = 0
 				switch(spare_blood)
 					if(0 to 30) //20 is the functional minimum due to midpoint calc
@@ -98,9 +98,9 @@
 
 
 //Makes a blood drop, leaking amt units of blood from the mob
-/mob/living/carbon/proc/drip(amt)
+/mob/living/carbon/proc/drip(amt, forced)
 
-	if(reagents.get_reagent_amount(/datum/reagent/medicine/quickclot)) //Quickclot stops bleeding, magic!
+	if(!forced && reagents.get_reagent_amount(/datum/reagent/medicine/quickclot)) //Quickclot stops bleeding, magic! (unless forced)
 		return
 
 	if(blood_volume)
@@ -112,7 +112,7 @@
 				add_splatter_floor(loc, 1)
 		return TRUE
 
-/mob/living/carbon/human/drip(amt)
+/mob/living/carbon/human/drip(amt, forced)
 	if(HAS_TRAIT(src, TRAIT_STASIS)) // stasis now stops bloodloss
 		return
 	if(species.species_flags & NO_BLOOD)
