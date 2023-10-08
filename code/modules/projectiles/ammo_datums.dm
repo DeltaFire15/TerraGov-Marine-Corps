@@ -3966,6 +3966,60 @@ GLOBAL_LIST_INIT(no_sticky_resin, typecacheof(list(/obj/item/clothing/mask/faceh
 	sound_hit = 'sound/bullets/spear_armor1.ogg'
 	flags_ammo_behavior = AMMO_XENO|AMMO_SKIPS_ALIENS
 
+/datum/ammo/xeno/thorn //Warden
+	name = "thorn basetype - this shouldn't exist"
+	damage = 10 //This xeno is a force amplifier as opposed to dps, therefore its direct mob damage is very low. Consider like 15 though..
+	//icon_state = TODO
+	spit_cost = 0
+	damage_type = BRUTE
+	armor_type = MELEE //Thorns count as melee damage towards armor.
+	//sound_hit = TODO
+	flags_ammo_behavior = AMMO_XENO|AMMO_SKIPS_ALIENS
+	//shell_speed = TODO - Decide
+
+	//Types of marks applied.
+	var/regen = 0
+	var/burn = 0
+	var/drain = 0
+
+/datum/ammo/xeno/thorn/on_hit_obj(obj/O, obj/projectile/proj)
+	proj.damage *= 3 //Shouldn't just be useless on sieges.
+	. = ..()
+
+/datum/ammo/xeno/thorn/on_hit_turf(turf/T, obj/projectile/proj)
+	proj.damage *= 3
+	. = ..()
+
+/datum/ammo/xeno/thorn/on_hit_mob(mob/M, obj/projectile/proj, datum/status_effect/thorn_mark/mark) //Using args to not copypaste a line. Might be counted as hacky?
+	//Check for Thorn status effect / apply it in here, then handle adding stacks in the overrides.
+	if(ishuman(M))
+		var/mob/living/carbon/human/thorned_human = M
+		mark = thorned_human.has_status_effect(/datum/status_effect/thorn_mark)
+		if(!mark)
+			mark = thorned_human.apply_status_effect(/datum/status_effect/thorn_mark)
+		mark.add_stacks(proj.firer, regen, burn, drain)
+	. = ..()
+
+
+//TODO: Each of these has its own icon! regen = greenish, searing = redish, draining = blueish; prismatic = silver/whiteish
+/datum/ammo/xeno/thorn/regenerative
+	name = "regenerative thorn"
+	regen = 1
+
+/datum/ammo/xeno/thorn/searing
+	name = "searing thorn"
+	burn = 1
+
+/datum/ammo/xeno/thorn/draining
+	name = "draining thorn"
+	drain = 1
+
+/datum/ammo/xeno/thorn/prismatic
+	name = "prismatic thorn"
+	regen = 1
+	burn = 1
+	drain = 1
+
 /*
 //================================================
 					Misc Ammo

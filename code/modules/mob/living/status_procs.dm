@@ -721,6 +721,10 @@
 		return
 	if((!(status_flags & CANSTUN) || HAS_TRAIT(src, TRAIT_STAGGERIMMUNE)) && !ignore_canstun)
 		return
+	var/list/amount_list = list(amount)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_PRESTAGGER, amount_list, ignore_canstun) & COMPONENT_NO_STUN)
+		return //Absorbed
+	amount = amount_list[1]
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(absorb_stun(amount, ignore_canstun))
@@ -745,6 +749,10 @@
 		return
 	if((!(status_flags & CANSTUN) || HAS_TRAIT(src, TRAIT_STAGGERIMMUNE)) && !ignore_canstun)
 		return
+	var/list/amount_list = list(amount)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_PRESTAGGER, amount_list, ignore_canstun) & COMPONENT_NO_STUN)
+		return //Absorbed
+	amount = amount_list[1]
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(absorb_stun(amount, ignore_canstun))
@@ -763,6 +771,10 @@
 		return
 	if((!(status_flags & CANSTUN) || HAS_TRAIT(src, TRAIT_STAGGERIMMUNE)) && !ignore_canstun)
 		return
+	var/list/amount_list = list(amount)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_PRESTAGGER, amount_list, ignore_canstun) & COMPONENT_NO_STUN)
+		return //Absorbed
+	amount = amount_list[1]
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STAGGER, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(absorb_stun(amount, ignore_canstun))
@@ -788,6 +800,11 @@
 		return
 	if(amount > 0 && HAS_TRAIT(src, TRAIT_SLOWDOWNIMMUNE)) //We're immune to slowdown
 		return
+	var/list/amount_list = list(amount)
+	SEND_SIGNAL(src, COMSIG_LIVING_PRESLOWDOWN, amount)
+	if(amount_list[1] <= slowdown && amount > slowdown)
+		return //Absorbed.
+	amount = amount_list[1]
 	SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLOWDOWN, amount)
 	slowdown = amount
 	if(slowdown)

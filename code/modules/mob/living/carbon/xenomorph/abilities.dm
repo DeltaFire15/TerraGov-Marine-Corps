@@ -723,6 +723,14 @@
 	target_flags = XABB_MOB_TARGET
 	///Current target that the xeno is targeting. This is for aiming.
 	var/current_target
+	///The verb used for the action select, e.g. "spit"
+	var/spit_verb = "spit"
+	///Can we count what we spit?
+	var/quantifyable = FALSE
+	///Which sound options does this have?
+	var/spit_sounds = list('sound/voice/alien_spitacid.ogg', 'sound/voice/alien_spitacid2.ogg')
+	///Message displayed when cooldown is finished.
+	var/cooldown_finish_message = "We feel our neurotoxin glands swell with ichor. We can spit again."
 
 /datum/action/xeno_action/activable/xeno_spit/give_action(mob/living/L)
 	. = ..()
@@ -751,7 +759,7 @@
 				break
 			X.ammo = GLOB.ammo_list[X.xeno_caste.spit_types[i+1]]
 			break
-	to_chat(X, span_notice("We will now spit [X.ammo.name] ([X.ammo.spit_cost] plasma)."))
+	to_chat(X, span_notice("We will now [spit_verb] [X.ammo.name][quantifyable ? "s" : ""][X.ammo.spit_cost > 0 ? " ([X.ammo.spit_cost] plasma)" : ""]."))
 	X.update_spits(TRUE)
 	update_button_icon()
 
@@ -777,7 +785,7 @@
 
 /datum/action/xeno_action/activable/xeno_spit/on_cooldown_finish()
 	var/mob/living/carbon/xenomorph/X = owner
-	to_chat(X, span_notice("We feel our neurotoxin glands swell with ichor. We can spit again."))
+	to_chat(X, span_notice("[cooldown_finish_message]"))
 	return ..()
 
 /datum/action/xeno_action/activable/xeno_spit/use_ability(atom/A)
@@ -807,7 +815,7 @@
 /datum/action/xeno_action/activable/xeno_spit/proc/fire()
 	var/mob/living/carbon/xenomorph/X = owner
 	var/turf/current_turf = get_turf(owner)
-	var/sound_to_play = pick(1, 2) == 1 ? 'sound/voice/alien_spitacid.ogg' : 'sound/voice/alien_spitacid2.ogg'
+	var/sound_to_play = pick(spit_sounds)
 	playsound(X.loc, sound_to_play, 25, 1)
 
 	var/obj/projectile/newspit = new /obj/projectile(current_turf)

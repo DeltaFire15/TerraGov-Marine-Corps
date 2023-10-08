@@ -772,6 +772,92 @@
 	icon_state = "healing_infusion"
 
 // ***************************************
+// *********** Burning Recovery
+// ***************************************
+
+//Heals 1% of max health per second, costing one stack / tick (amounting to [stacks%] total healing over [stacks] seconds)
+/datum/status_effect/stacking/burning_recovery
+	id = "burning_recovery"
+	tick_interval = 1 SECONDS
+	max_stacks = 50 //I have no idea how you would even get them this high, but lets be safe.
+
+	///Owner of the debuff is limited to xenos.
+	var/mob/living/carbon/xenomorph/buff_owner
+
+/datum/status_effect/stacking/burning_recovery/on_creation(mob/living/new_owner, stacks_to_apply)
+	. = ..()
+	buff_owner = new_owner
+
+/datum/status_effect/stacking/burning_recovery/on_remove()
+	buff_owner = null
+	return ..()
+
+/datum/status_effect/stacking/burning_recovery/tick()
+	. = ..()
+	if(!buff_owner)
+		return
+	var/heal_amount = buff_owner.xeno_caste.max_health * 0.01
+	buff_owner.heal_wounds(override = heal_amount)
+
+//WARDEN-WIP - could use a custom alert!
+
+// ***************************************
+// *********** Absorbed Resilience
+// ***************************************
+
+//Protects against stagger / slow, each stack amounting to 1 decidecond of potential absorbtion. Consumed by defending against a debuff; decays after some time.
+/datum/status_effect/stacking/absorbed_resilience
+	id = "absorbed_resilience"
+	max_stacks = 100
+	stack_decay = 0
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	var/mob/living/carbon/xenomorph/buff_owner
+
+/datum/status_effect/stacking/absorbed_resilience/on_creation(mob/living/new_owner, stacks_to_apply)
+	. = ..()
+	buff_owner = new_owner
+	RegisterSignals(buff_owner, list(COMSIG_LIVING_PRESTAGGER, COMSIG_LIVING_PRESLOWDOWN), PROC_REF(absorb_debuffs))
+
+/datum/status_effect/stacking/absorbed_resilience/on_remove()
+	UnregisterSignal(buff_owner, list(COMSIG_LIVING_PRESTAGGER, COMSIG_LIVING_PRESLOWDOWN))
+	buff_owner = null
+	return ..()
+
+/datum/status_effect/stacking/absorbed_resilience/proc/absorb_debuffs(mob/living/carbon/xenomorph/debuffed, list/amount_list, ignore_canstun)
+	SIGNAL_HANDLER
+	var/amount = amount_list[1]
+	if(amount <= 0 || ignore_canstun)
+		return
+	var/absorbing = min(amount, stacks)
+	var/result = amount - absorbing
+	amount_list[1] = result
+	add_stacks(-absorbing)
+	if(result == 0)
+		return COMPONENT_NO_STUN
+
+
+//WARDEN-WIP - could use a custom alert!
+
+// ***************************************
+// *********** Searing Momentum
+// ***************************************
+
+/datum/status_effect/searing_momentum
+	id = "searing_momentum"
+	duration = 3 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/datum/status_effect/searing_momentum/on_creation(mob/living/new_owner)
+	. = ..()
+	new_owner.add_movespeed_modifier(MOVESPEED_ID_SEARING_MOMENTUM, TRUE, 0, NONE, TRUE, -0.2)
+
+/datum/status_effect/searing_momentum/on_remove()
+	owner.remove_movespeed_modifier(MOVESPEED_ID_SEARING_MOMENTUM)
+	return ..()
+//WARDEN-WIP - could use a custom alert!
+
+// ***************************************
 // *********** Drain Surge
 // ***************************************
 /datum/status_effect/drain_surge
@@ -835,7 +921,7 @@
 	/// The owner of this buff.
 	var/mob/living/carbon/xenomorph/buff_owner
 	///Aura strength of the puppeteer who gave this effect
-	var/strength = 1	
+	var/strength = 1
 	///weakref to the puppeteer to set strength
 	var/datum/weakref/puppeteer
 

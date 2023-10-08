@@ -90,20 +90,30 @@
 		heal_wounds(XENO_RESTING_HEAL)
 	else if(!endure) //If we're not Enduring we bleed out
 		adjustBruteLoss(XENO_CRIT_DAMAGE)
-
-/mob/living/carbon/xenomorph/proc/heal_wounds(multiplier = XENO_RESTING_HEAL, scaling = FALSE)
-	var/amount = 1 + (maxHealth * 0.0375) // 1 damage + 3.75% max health, with scaling power.
-	if(recovery_aura)
-		amount += recovery_aura * maxHealth * 0.01 // +1% max health per recovery level, up to +5%
-	if(scaling)
+/**
+ * Heals a xenos damage
+ * Args:
+ * * multiplier: Multiplies healing by arg.
+ * * scaling: Scales with pheromone, aswell as time since injured.
+ * * override: If passed, ignores both above to instead heal a fixed value of damage.
+**/
+/mob/living/carbon/xenomorph/proc/heal_wounds(multiplier = XENO_RESTING_HEAL, scaling = FALSE, override = 0)
+	var/amount
+	if(!override)
+		amount = 1 + (maxHealth * 0.0375) // 1 damage + 3.75% max health, with scaling power.
 		if(recovery_aura)
-			regen_power = clamp(regen_power + xeno_caste.regen_ramp_amount*30,0,1) //Ignores the cooldown, and gives a 50% boost.
-		else if(regen_power < 0) // We're not supposed to regenerate yet. Start a countdown for regeneration.
-			regen_power += 2 SECONDS //Life ticks are 2 seconds.
-			return
-		else
-			regen_power = min(regen_power + xeno_caste.regen_ramp_amount*20,1)
-		amount *= regen_power
+			amount += recovery_aura * maxHealth * 0.01 // +1% max health per recovery level, up to +5%
+		if(scaling)
+			if(recovery_aura)
+				regen_power = clamp(regen_power + xeno_caste.regen_ramp_amount*30,0,1) //Ignores the cooldown, and gives a 50% boost.
+			else if(regen_power < 0) // We're not supposed to regenerate yet. Start a countdown for regeneration.
+				regen_power += 2 SECONDS //Life ticks are 2 seconds.
+				return
+			else
+				regen_power = min(regen_power + xeno_caste.regen_ramp_amount*20,1)
+			amount *= regen_power
+	else
+		amount = override
 	amount *= multiplier * GLOB.xeno_stat_multiplicator_buff
 
 	var/list/heal_data = list(amount)

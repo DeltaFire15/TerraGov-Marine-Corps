@@ -516,6 +516,9 @@
 #define COMSIG_LIVING_STATUS_SLOWDOWN "living_slowdown"			//from base of mob/living/set_slowdown() (amount, update)
 	#define COMPONENT_NO_STUN (1<<0)			//For all of them
 
+#define COMSIG_LIVING_PRESTAGGER "living_prestagger"			//! Sent before the actual stagger signal, while also passing amount in a way where modification will apply. Use this to change instead of only read it.
+#define COMSIG_LIVING_PRESLOWDOWN "living_preslowdown"			//! Send before the actual slowdown signal, while also having modification apply.
+
 ///from end of fully_heal(): (admin_revive)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 
@@ -597,6 +600,7 @@
 ///after attacking, accounts for armor
 #define COMSIG_XENOMORPH_POSTATTACK_LIVING "xenomorph_postattack_living"
 #define COMSIG_XENOMORPH_ATTACK_HUMAN "xenomorph_attack_human"
+#define COMSIG_HUMAN_ATTACKEDBY_XENO "human_attackedby_xenomorph"
 #define COMSIG_XENOMORPH_DISARM_HUMAN "xenomorph_disarm_human"
 	#define COMPONENT_BYPASS_SHIELDS (1<<0)
 	#define COMPONENT_BYPASS_ARMOR (1<<1)
