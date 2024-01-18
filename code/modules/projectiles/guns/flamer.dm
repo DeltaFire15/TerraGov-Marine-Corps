@@ -344,6 +344,13 @@
 	)
 	starting_attachment_types = list(/obj/item/attachable/flamer_nozzle, /obj/item/attachable/stock/t84stock)
 
+/obj/item/weapon/gun/flamer/big_flamer/marinestandard/engineer/beginner
+	starting_attachment_types = list(
+		/obj/item/attachable/motiondetector,
+		/obj/item/attachable/flamer_nozzle,
+		/obj/item/attachable/stock/t84stock,
+	)
+
 /obj/item/weapon/gun/flamer/mini_flamer
 	name = "mini flamethrower"
 	desc = "A weapon-mounted refillable flamethrower attachment.\nIt is designed for short bursts."
@@ -458,7 +465,8 @@
 /turf/open/floor/plating/ground/snow/ignite(fire_lvl, burn_lvl, f_color, fire_stacks = 0, fire_damage = 0)
 	if(slayer > 0)
 		slayer -= 1
-		update_icon(1, 0)
+		update_appearance()
+		update_sides()
 	return ..()
 
 

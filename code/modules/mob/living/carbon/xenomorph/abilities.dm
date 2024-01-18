@@ -125,9 +125,7 @@
 		return
 	if(get_dist(owner, last_weeded_turf) < AUTO_WEEDING_MIN_DIST)
 		return
-	if(!can_use_action(TRUE))
-		return
-	if(!can_use_ability(xeno_owner.loc, TRUE))
+	if(!can_use_ability(xeno_owner.loc, TRUE, ABILITY_IGNORE_SELECTED_ABILITY))
 		return
 	plant_weeds(owner)
 
@@ -1202,7 +1200,8 @@
 	if(HAS_TRAIT(victim, TRAIT_HIVE_TARGET))
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_HIVE_TARGET_DRAINED, X)
 		psy_points_reward = psy_points_reward * 3
-	SSpoints.add_psy_points(X.hivenumber, psy_points_reward)
+	SSpoints.add_strategic_psy_points(X.hivenumber, psy_points_reward)
+	SSpoints.add_tactical_psy_points(X.hivenumber, psy_points_reward*0.25)
 	var/datum/job/xeno_job = SSjob.GetJobType(/datum/job/xenomorph)
 	xeno_job.add_job_points(larva_point_reward)
 	X.hive.update_tier_limits()

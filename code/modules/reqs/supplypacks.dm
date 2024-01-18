@@ -343,6 +343,16 @@ WEAPONS
 	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/tesla)
 	cost = 600
 
+/datum/supply_packs/weapons/plasma_rifle
+	name = "PL-38 Plasma Rifle"
+	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle)
+	cost = 250
+
+/datum/supply_packs/weapons/plasma_cannon
+	name = "PL-96 Plasma Cannon"
+	contains = list(/obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/cannon)
+	cost = 250
+
 /datum/supply_packs/weapons/tx54
 	name = "GL-54 airburst grenade launcher"
 	contains = list(/obj/item/weapon/gun/rifle/tx54)
@@ -372,12 +382,6 @@ WEAPONS
 	name = "GL-54 tanglefoot grenade magazine"
 	contains = list(/obj/item/ammo_magazine/rifle/tx54/smoke/tangle)
 	cost = 48
-
-/datum/supply_packs/weapons/tx54_he
-	name = "GL-54 HE grenade magazine"
-	contains = list(/obj/item/ammo_magazine/rifle/tx54/he)
-	cost = 50
-	available_against_xeno_only = TRUE
 
 /datum/supply_packs/weapons/tx55
 	name = "AR-55 OICW Rifle"
@@ -643,6 +647,11 @@ WEAPONS
 	contains = list(/obj/item/ammo_magazine/packet/smart_minigun)
 	cost = 50
 
+/datum/supply_packs/weapons/smart_minigun_powerpack
+	name = "SG-85 powerpack"
+	contains = list(/obj/item/ammo_magazine/minigun_powerpack/smartgun)
+	cost = 150
+
 /datum/supply_packs/weapons/smarttarget_rifle
 	name = "SG-62 Smart Target Rifle"
 	contains = list(/obj/item/weapon/gun/rifle/standard_smarttargetrifle)
@@ -652,6 +661,11 @@ WEAPONS
 	name = "SG-62 smart target rifle ammo"
 	contains = list(/obj/item/ammo_magazine/rifle/standard_smarttargetrifle)
 	cost = 35
+
+/datum/supply_packs/weapons/smarttarget_rifle_ammo_bin
+	name = "SG-62 smart target rifle ammo bin"
+	contains = list(/obj/item/ammo_magazine/packet/smart_targetrifle)
+	cost = 50
 
 /datum/supply_packs/weapons/spotting_rifle_ammo
 	name = "SG-153 spotting rifle ammo"
@@ -859,13 +873,6 @@ EXPLOSIVES
 	notes = "Contains 15 grenades"
 	contains = list(/obj/item/storage/box/visual/grenade/phosphorus)
 	cost = 700
-
-/datum/supply_packs/explosives/explosives_plasmadrain
-	name = "M40-T gas grenade box crate"
-	notes = "Contains 25 grenades"
-	contains = list(/obj/item/storage/box/visual/grenade/drain)
-	cost = 700
-	available_against_xeno_only = TRUE
 
 /datum/supply_packs/explosives/plastique
 	name = "C4 plastic explosive"
@@ -1333,7 +1340,7 @@ ENGINEERING
 
 /datum/supply_packs/engineering/glass50
 	name = "50 glass sheets"
-	contains = list(/obj/item/stack/sheet/glass/large_stack)
+	contains = list(/obj/item/stack/sheet/glass/glass/large_stack)
 	cost = 100
 
 /datum/supply_packs/engineering/wood50
@@ -2106,10 +2113,9 @@ FACTORY
 	contains = list(/obj/item/factory_refill/smartgunner_machinegun_magazine_refill)
 	cost = 250
 
-
 /datum/supply_packs/factory/smartgun_targetrifle_refill
-	name = "SG-62 ammo drum parts refill"
-	contains = list(/datum/supply_packs/factory/smartgun_magazine_refill)
+	name = "SG-62 ammo magazine parts refill"
+	contains = list(/obj/item/factory_refill/smartgunner_targetrifle_magazine_refill)
 	cost = 250
 
 /datum/supply_packs/factory/autosniper_magazine_refill

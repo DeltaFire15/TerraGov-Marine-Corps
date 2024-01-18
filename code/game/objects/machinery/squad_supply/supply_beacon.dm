@@ -12,6 +12,7 @@
 	var/underground_signal = FALSE
 
 /obj/item/beacon/update_icon_state()
+	. = ..()
 	icon_state = activated ? icon_activated : initial(icon_state)
 
 /obj/item/beacon/attack_self(mob/living/carbon/human/H)
@@ -117,7 +118,8 @@
 /obj/item/beacon/supply_beacon/onTransitZ(old_z,new_z)
 	. = ..()
 	//Assumes doMove sets loc before onTransitZ
-	beacon_datum.drop_location = loc
+	if(beacon_datum)
+		beacon_datum.drop_location = loc
 
 /obj/item/beacon/supply_beacon/activate(mob/living/carbon/human/H)
 	var/area/A = get_area(H)

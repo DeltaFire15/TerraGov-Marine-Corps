@@ -29,6 +29,8 @@
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/standard_marine_mlaser = -1,
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/standard_marine_pistol = -1,
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/tesla = 2,
+			/obj/item/cell/lasgun/plasma_powerpack = -1,
+			/obj/item/cell/lasgun/volkite/powerpack/plasma_chargepack = -1,
 		),
 		"SMGs" = list(
 			/obj/item/weapon/gun/smg/standard_smg = -1,
@@ -117,7 +119,6 @@
 			/obj/item/explosive/grenade/smokebomb = 25,
 			/obj/item/explosive/grenade/smokebomb/cloak = 25,
 			/obj/item/explosive/grenade/sticky/cloaker = 10,
-			/obj/item/explosive/grenade/smokebomb/drain = 10,
 			/obj/item/explosive/grenade/mirage = 100,
 			/obj/item/storage/box/m94 = 200,
 			/obj/item/storage/box/m94/cas = 30,
@@ -245,6 +246,8 @@
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/standard_marine_mlaser = -1,
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/standard_marine_pistol = -1,
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/tesla = 2,
+			/obj/item/cell/lasgun/plasma_powerpack = -1,
+			/obj/item/cell/lasgun/volkite/powerpack/plasma_chargepack = -1,
 		),
 		"SMGs" = list(
 			/obj/item/weapon/gun/smg/standard_smg = -1,
@@ -306,7 +309,6 @@
 			/obj/item/ammo_magazine/pistol/standard_heavypistol = -1,
 			/obj/item/weapon/gun/revolver/standard_revolver = -1,
 			/obj/item/ammo_magazine/revolver/standard_revolver = -1,
-			/obj/item/weapon/gun/revolver/standard_magnum = -1,
 			/obj/item/ammo_magazine/revolver/standard_magnum = -1,
 			/obj/item/weapon/gun/pistol/standard_pocketpistol = -1,
 			/obj/item/ammo_magazine/pistol/standard_pocketpistol = -1,
@@ -325,7 +327,6 @@
 			/obj/item/explosive/grenade/sticky = 125,
 			/obj/item/explosive/grenade/incendiary = 50,
 			/obj/item/explosive/grenade/smokebomb/cloak = 25,
-			/obj/item/explosive/grenade/smokebomb/drain = 10,
 			/obj/item/explosive/grenade/mirage = 100,
 			/obj/item/storage/box/m94 = 200,
 			/obj/item/storage/box/m94/cas = 50,
@@ -443,6 +444,10 @@
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/standard_marine_mlaser = -1,
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/standard_marine_pistol = -1,
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/tesla = -1,
+			/obj/item/cell/lasgun/plasma_powerpack = -1,
+			/obj/item/cell/lasgun/volkite/powerpack/plasma_chargepack = -1,
+			/obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/rifle = -1,
+			/obj/item/weapon/gun/energy/lasgun/lasrifle/plasma/cannon = -1,
 		),
 		"SMGs" = list(
 			/obj/item/weapon/gun/smg/standard_smg = -1,
@@ -823,7 +828,8 @@
 	. = ..()
 	update_icon()
 
-/obj/machinery/vending/lasgun/update_icon()
+/obj/machinery/vending/lasgun/update_icon_state()
+	. = ..()
 	if(machine_max_charge)
 		switch(machine_current_charge / max(1,machine_max_charge))
 			if(0.7 to 1)
@@ -1022,6 +1028,7 @@
 	icon_vend = "surplus-vend"
 	icon_deny = "surplus_armor-deny"
 	isshared = TRUE
+	wrenchable = FALSE
 	product_ads = "You are out of uniform, marine! Where is your armor? Don't have any? You expect me to believe that, maggot?;Why wear heavy armor and unable to chase the enemy when you can go light and zoom by your peers?;Thank your armor later when you didn't die!;I remember PAS, do you remember PAS?;Time to paint the rainbow!;So many selections to choose from!"
 	products = list(
 		"Xenonauten" = list(
@@ -1095,19 +1102,6 @@
 			/obj/item/armor_module/module/style/light_armor = -1,
 			/obj/item/armor_module/module/style/medium_armor = -1,
 			/obj/item/armor_module/module/style/heavy_armor = -1,
-			/obj/item/clothing/head/modular/marine/kabuto = -1,
-			/obj/item/armor_module/armor/chest/marine/kabuto = -1,
-			/obj/item/armor_module/armor/legs/marine/kabuto = -1,
-			/obj/item/armor_module/armor/arms/marine/kabuto = -1,
-			/obj/item/clothing/head/modular/marine/hotaru = -1,
-			/obj/item/clothing/suit/modular/jaeger/hotaru = -1,
-			/obj/item/armor_module/armor/chest/marine/hotaru = -1,
-			/obj/item/armor_module/armor/legs/marine/hotaru = -1,
-			/obj/item/armor_module/armor/arms/marine/hotaru = -1,
-			/obj/item/clothing/head/modular/marine/dashe = -1,
-			/obj/item/armor_module/armor/chest/marine/dashe = -1,
-			/obj/item/armor_module/armor/arms/marine/dashe = -1,
-			/obj/item/armor_module/armor/legs/marine/dashe = -1,
 		),
 		"Jaeger Mk.I chestpieces" = list(
 			/obj/item/armor_module/armor/chest/marine/skirmisher = -1,
@@ -1153,6 +1147,21 @@
 			/obj/item/clothing/head/modular/marine/old/assault = -1,
 			/obj/item/clothing/head/modular/marine/old/eod = -1,
 		),
+		"Hardsuits" = list(
+			/obj/item/clothing/suit/modular/hardsuit_exoskeleton = -1,
+			/obj/item/clothing/head/modular/marine/hardsuit_helm/markfive = -1,
+			/obj/item/armor_module/armor/chest/marine/hardsuit/syndicate_markfive = -1,
+			/obj/item/armor_module/armor/arms/marine/hardsuit_arms/syndicate_markfive = -1,
+			/obj/item/armor_module/armor/legs/marine/hardsuit_legs/syndicate_markfive = -1,
+			/obj/item/clothing/head/modular/marine/hardsuit_helm/markthree = -1,
+			/obj/item/armor_module/armor/chest/marine/hardsuit/syndicate_markthree = -1,
+			/obj/item/armor_module/armor/arms/marine/hardsuit_arms/syndicate_markthree = -1,
+			/obj/item/armor_module/armor/legs/marine/hardsuit_legs/syndicate_markthree = -1,
+			/obj/item/clothing/head/modular/marine/hardsuit_helm/markone = -1,
+			/obj/item/armor_module/armor/chest/marine/hardsuit/syndicate_markone = -1,
+			/obj/item/armor_module/armor/arms/marine/hardsuit_arms/syndicate_markone = -1,
+			/obj/item/armor_module/armor/legs/marine/hardsuit_legs/syndicate_markone = -1,
+		),
 	)
 
 	prices = list()
@@ -1167,6 +1176,7 @@
 	icon_state = "surplus_clothes"
 	icon_vend = "surplus-vend"
 	icon_deny = "surplus_clothes-deny"
+	wrenchable = FALSE
 	isshared = TRUE
 	product_ads = "Be the musician that you parents never approve you of.;You gotta look good when you're in the battlefield.;We have all types of hats here!;What did one hat say to the other on the hiking trip? I'll wait here, you go on ahead;Sometimes, a beret is better than a helmet.;Drip is the priority, marine."
 	products = list(
@@ -1399,10 +1409,6 @@
 			/obj/item/ammo_magazine/railgun = -1,
 			/obj/item/ammo_magazine/railgun/smart = -1,
 			/obj/item/ammo_magazine/railgun/hvap = -1,
-			/obj/item/weapon/gun/rifle/tx8 = -1,
-			/obj/item/ammo_magazine/rifle/tx8 = -1,
-			/obj/item/ammo_magazine/rifle/tx8/impact = -1,
-			/obj/item/ammo_magazine/rifle/tx8/incendiary = -1,
 			/obj/item/ammo_magazine/packet/scout_rifle = -1,
 			/obj/item/weapon/gun/energy/lasgun/lasrifle/xray = -1,
 			/obj/item/weapon/gun/launcher/rocket/m57a4/t57 = -1,
@@ -1415,18 +1421,8 @@
 			/obj/item/ammo_magazine/rocket/sadar/wp/unguided = -1,
 			/obj/item/weapon/gun/shotgun/zx76 = -1,
 			/obj/item/ammo_magazine/shotgun/incendiary = -1,
-			/obj/item/weapon/gun/rifle/standard_autosniper = -1,
-			/obj/item/ammo_magazine/rifle/autosniper = -1,
-			/obj/item/weapon/gun/rifle/sniper/antimaterial = -1,
-			/obj/item/ammo_magazine/sniper = -1,
-			/obj/item/ammo_magazine/rifle/autosniper = -1,
 			/obj/item/weapon/gun/minigun/valhalla = -1,
 			/obj/item/ammo_magazine/minigun_powerpack = -1,
-			/obj/item/weapon/gun/rifle/standard_smartmachinegun = -1,
-			/obj/item/ammo_magazine/standard_smartmachinegun = -1,
-			/obj/item/weapon/gun/minigun/smart_minigun = -1,
-			/obj/item/ammo_magazine/minigun_powerpack/smartgun = -1,
-			/obj/item/ammo_magazine/packet/smart_minigun = -1,
 			/obj/item/weapon/gun/launcher/rocket/oneuse = -1,
 			/obj/item/storage/holster/belt/mateba/full = -1,
 			/obj/item/ammo_magazine/revolver/mateba = -1,
@@ -1445,6 +1441,33 @@
 			/obj/item/ammo_magazine/m412l1_hpr = -1,
 			/obj/item/weapon/gun/rifle/famas = -1,
 			/obj/item/ammo_magazine/rifle/famas = -1,
+		),
+		"Smartguns/IFF" = list(
+			/obj/item/weapon/gun/rifle/standard_smartmachinegun = -1,
+			/obj/item/ammo_magazine/standard_smartmachinegun = -1,
+			/obj/item/weapon/gun/minigun/smart_minigun = -1,
+			/obj/item/ammo_magazine/minigun_powerpack/smartgun = -1,
+			/obj/item/ammo_magazine/packet/smart_minigun = -1,
+			/obj/item/weapon/gun/rifle/standard_smarttargetrifle = -1,
+			/obj/item/ammo_magazine/rifle/standard_smarttargetrifle = -1,
+			/obj/item/ammo_magazine/packet/smart_targetrifle = -1,
+			/obj/item/ammo_magazine/rifle/standard_spottingrifle = -1,
+			/obj/item/ammo_magazine/rifle/standard_spottingrifle/highimpact = -1,
+			/obj/item/ammo_magazine/rifle/standard_spottingrifle/heavyrubber = -1,
+			/obj/item/ammo_magazine/rifle/standard_spottingrifle/tungsten = -1,
+			/obj/item/ammo_magazine/rifle/standard_spottingrifle/flak = -1,
+			/obj/item/ammo_magazine/rifle/standard_spottingrifle/plasmaloss = -1,
+			/obj/item/ammo_magazine/rifle/standard_spottingrifle/incendiary = -1,
+			/obj/item/weapon/gun/pistol/smart_pistol = -1,
+			/obj/item/ammo_magazine/pistol/standard_pistol/smart_pistol = -1,
+			/obj/item/weapon/gun/rifle/tx8 = -1,
+			/obj/item/ammo_magazine/rifle/tx8 = -1,
+			/obj/item/ammo_magazine/rifle/tx8/impact = -1,
+			/obj/item/ammo_magazine/rifle/tx8/incendiary = -1,
+			/obj/item/weapon/gun/rifle/standard_autosniper = -1,
+			/obj/item/ammo_magazine/rifle/autosniper = -1,
+			/obj/item/weapon/gun/rifle/sniper/antimaterial = -1,
+			/obj/item/ammo_magazine/sniper = -1,
 		),
 		"Mounted" = list(
 			/obj/item/weapon/gun/standard_auto_cannon = -1,
@@ -1636,6 +1659,7 @@
 	icon_deny = "tool-deny"
 	icon_vend = "tool-vend"
 	isshared = TRUE
+	wrenchable = FALSE
 	products = list(
 		/obj/item/stack/cable_coil = -1,
 		/obj/item/tool/crowbar = -1,
@@ -1658,6 +1682,7 @@
 	icon_state = "requisitionop"
 	resistance_flags = INDESTRUCTIBLE
 	use_power = NO_POWER_USE
+	wrenchable = FALSE
 	products = list(
 		"Weapon" = list(
 			/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/pistol = -1,

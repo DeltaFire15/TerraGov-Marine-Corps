@@ -50,12 +50,28 @@
 	LAZYREMOVE(GLOB.humans_by_zlevel["[old_z]"], src)
 	LAZYADD(GLOB.humans_by_zlevel["[new_z]"], src)
 
+/mob/living/carbon/human/vv_edit_var(var_name, var_value)
+	return ..()
+
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()
-	. += "---"
-	.["Drop Everything"] = "?_src_=vars;[HrefToken()];dropeverything=[REF(src)]"
-	.["Copy Outfit"] = "?_src_=vars;[HrefToken()];copyoutfit=[REF(src)]"
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
 
+/mob/living/carbon/human/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(href_list[VV_HK_SET_SPECIES])
+		if(!check_rights(R_SPAWN))
+			return
+		var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.all_species
+		if(result)
+			var/newtype = GLOB.all_species[result]
+			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src] to [result]")
+			set_species(newtype)
 
 /mob/living/carbon/human/prepare_huds()
 	..()
@@ -114,6 +130,10 @@
 		. += "You are affected by a HOLD order."
 	if(marksman_aura)
 		. += "You are affected by a FOCUS order."
+
+/mob/living/carbon/human/set_skills(datum/skills/new_skillset)
+	. = ..()
+	update_stam_skill_mod(skills)
 
 /mob/living/carbon/human/ex_act(severity)
 	if(status_flags & GODMODE)
@@ -281,7 +301,6 @@
 	var/siemens_coeff = base_siemens_coeff * get_siemens_coefficient_organ(affected_organ)
 
 	return ..(shock_damage, source, siemens_coeff, def_zone)
-
 
 /mob/living/carbon/human/Topic(href, href_list)
 	. = ..()
