@@ -39,7 +39,7 @@
 		if(0)
 			return ALL_ACCESS
 		if(1)
-			return list(ACCESS_MARINE_CAPTAIN, ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_TADPOLE, ACCESS_MARINE_PILOT, ACCESS_MARINE_MECH, ACCESS_MARINE_BRIDGE)//command
+			return list(ACCESS_MARINE_CAPTAIN, ACCESS_MARINE_COMMANDER, ACCESS_MARINE_LOGISTICS, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_TADPOLE, ACCESS_MARINE_PILOT, ACCESS_MARINE_MECH, ACCESS_MARINE_BRIDGE, ACCESS_MARINE_ARMORED)//command
 		if(2)
 			return list(ACCESS_MARINE_CE, ACCESS_MARINE_ENGINEERING, ACCESS_MARINE_REMOTEBUILD)//engineering and maintenance
 		if(3)
@@ -138,6 +138,8 @@
 			return "Pilot Gear"
 		if(ACCESS_MARINE_MECH)
 			return "Mech"
+		if(ACCESS_MARINE_ARMORED)
+			return "Armored Vehicle Bay"
 		if(ACCESS_CIVILIAN_RESEARCH)
 			return "Civilian Research"
 		if(ACCESS_CIVILIAN_LOGISTICS)
@@ -185,16 +187,34 @@
 	switch(paygrade)
 		if("C")
 			. = size ? "" : "Civilian"
-		if("CD")
-			. = size ? "Dr." : "Doctor"
+		if("MS")
+			. = size ? "MS" : "Medical Student"
+		if("JR")
+			. = size ? "JR" : "Junior Resident"
+		if("SR")
+			. = size ? "SR" : "Senior Resident"
+		if("GP")
+			. = size ? "GP" : "General Practitioner"
+		if("AP")
+			. = size ? "AP" : "Attending Physician"
+		if("SP")
+			. = size ? "SP" : "Senior Physician"
+		if("HP")
+			. = size ? "HP" : "Head Physician"
+		if("MSPVR")
+			. = size ? "MSPVR" : "Medical Supervisor"
+		if("MDR")
+			. = size ? "MDR" : "Medical Director"
+		if("RSRA")
+			. = size ? "RSRA" : "Research Assistant"
+		if("RSR")
+			. = size ? "RSR" : "Researcher"
+		if("LECT")
+			. = size ? "LECT" : "Lecturer"
+		if("APROF")
+			. = size ? "APROF" : "Associate Professor"
 		if("PROF")
-			. = size ? "Prof." : "Professor"
-		if("RES")
-			. = size ? "RES" : "Medical Resident"
-		if("MD")
-			. = size ? "MD" : "Medical Doctor"
-		if("CHO")
-			. = size ? "CHO" : "Chief Health Officer"
+			. = size ? "PROF" : "Professor"
 		if("CMO")
 			. = size ? "CMO" : "Chief Medical Officer"
 		if("CMN")
@@ -283,6 +303,8 @@
 			. = size ? "PO1" : "Petty Officer First Class"
 		if("CPO")
 			. = size ? "CPO" : "Chief Petty Officer"
+		if("SCPO")
+			. = size ? "SCPO" : "Senior Chief Petty Officer"
 		if("MO4")
 			. = size ? "MAJ" : "Major"
 		if("MO5")
@@ -411,6 +433,10 @@
 			. = size ? "MERC" : "MERC Engineer"
 		if("VM")
 			. = size ? "VAT" : "VatGrown Marine"
+		if("Mk.V")
+			. = size ? "Mk.V" : "Mark V"
+		if("Mk.IV")
+			. = size ? "Mk.IV" : "Mark IV"
 		if("Mk.III")
 			. = size ? "Mk.III" : "Mark III"
 		if("Mk.II")

@@ -71,9 +71,9 @@ A good representation is: 'byond applies a volume reduction to the sound every X
 		M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, is_global, channel, S, sound_reciever = M)
 
 	for(var/obj/vehicle/sealed/armored/armor AS in GLOB.tank_list)
-		if(!armor.interior || armor.z != turf_source.z || get_dist(armor, turf_source) > sound_range)
+		if(!armor.interior || armor.z != turf_source.z || get_dist(armor.loc, turf_source) > sound_range)
 			continue
-		for(var/mob/living/crew AS in armor.occupants)
+		for(var/mob/crew AS in armor.interior.occupants)
 			//turf source is null on purpose because it will not work properly since crew is on a different z
 			crew.playsound_local(null, soundin, vol*0.5, vary, frequency, falloff, is_global, channel, S, sound_reciever = crew)
 
@@ -262,6 +262,8 @@ A good representation is: 'byond applies a volume reduction to the sound every X
 			S = pick('sound/weapons/guns/fire/fal1.ogg', 'sound/weapons/guns/fire/fal2.ogg')
 		if("mp38_fire")
 			S = pick('sound/weapons/guns/fire/mp38_1.ogg', 'sound/weapons/guns/fire/mp38_2.ogg')
+		if("slam")
+			S = pick('sound/effects/slam1.ogg', 'sound/effects/slam2.ogg', 'sound/effects/slam3.ogg')
 
 		// Xeno
 		if("acid_hit")

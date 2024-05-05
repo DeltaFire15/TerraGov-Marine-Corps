@@ -184,7 +184,9 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 
 #define isgrenade(A) (istype(A, /obj/item/explosive/grenade))
 
-#define isstorage(A) (istype(A, /obj/item/storage))
+#define isdatumstorage(A) (istype(A, /datum/storage))
+
+#define isstorageobj(A) (istype(A, /obj/item/storage))
 
 #define isitemstack(A) (istype(A, /obj/item/stack))
 
@@ -226,7 +228,11 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 
 #define iscrowbar(I) (istype(I, /obj/item/tool/crowbar))
 
+#define isplasmacutter(I) istype(I, /obj/item/tool/pickaxe/plasmacutter)
+
 #define iscell(I) (istype(I, /obj/item/cell))
+
+#define islascell(I) (istype(I, /obj/item/cell/lasgun))
 
 #define isfactorypart(I) (istype(I, /obj/item/factory_part))
 
@@ -267,6 +273,12 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 #define is_research_product(A) (istype(A, /obj/item/research_product)) //Checks if item is research item
 
 #define isearthpillar(A) (istype(A, /obj/structure/earth_pillar))
+
+#define isbarricade(A) (istype(A, /obj/structure/barricade))
+
+#define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
+
+#define isimplant(A) (istype(A, /obj/item/implant))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/assembly))
